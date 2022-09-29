@@ -1,0 +1,75 @@
+#include "wid_friends_list.h"
+
+wid_friends_list::wid_friends_list(QWidget *parent)
+    : wid_change{parent}
+{
+    this->resize(250,600);
+    this->open_translucent();
+    this->open_lessframe();
+    this->open_backdrop(":/pic/pic_bake_friends_list.png");
+
+    //创建滑动区域
+    wid_temp = new QWidget(this);
+    wid_temp->resize(v_wide+20,v_high);
+    area = new QScrollArea(this);
+    area->move(0,v_less/2);
+    area->resize(v_wide+20,v_high-v_less);
+    area->setFrameShape(QFrame::NoFrame);
+    area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏横向滚动条
+    area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏竖向滚动条
+    area->setPalette(QPalette(QPalette::Window,(QColor(255,0,0,0))));//设置窗口背景透明
+    area->setWidget(wid_temp);
+
+    //关闭位置
+    butt_close = new qt_button(this);
+    butt_close->resize(100,45);
+    butt_close->set_txt("<=退出=>");
+    int x=this->width()/2 - butt_close->width()/2;
+    int y=this->height() - butt_close->height();
+    butt_close->move(x,y);
+
+    QVector<QString> vet_s;
+    for(int i=0;i<100;i++)
+    {
+        vet_s.push_back("你是谁abCD第 "+QString::number(i)+" 位");
+    }
+
+    //创建好友列表
+    set_friends(vet_s);
+
+    //关闭窗口
+    connect(butt_close,&qt_button::fa_press,this,&QWidget::close);
+}
+
+void wid_friends_list::set_friends(QVector<QString> vec_str)
+{
+    //为容器创建按钮
+    for(int i=0;i<vec_str.size();i++)
+    {
+        qt_button *temp=new qt_button(wid_temp);
+        temp->set_txt(vec_str[i]);//按钮名称
+        temp->resize(v_wide-4,v_less/2);//设置按钮大小
+
+        vec_butt.push_back(temp);//添加到按钮容器
+    }
+
+    //添加到自动排序容器
+    qt_move_it *vec_move = new qt_move_it(wid_temp);
+    for(int i=0;i<vec_str.size();i++)
+    {
+        vec_move->add_wid(vec_butt[i]);//添加到自动排序容器
+    }
+    vec_move->set_vert(QPoint(0,0));//设置排序方式
+
+    wid_temp->resize(v_wide+20,vec_move->get_count_high());//根据按钮数量设置窗口大小
+
+    //容器按钮信号槽
+    for(int i=0;i<vec_butt.size();i++)
+    {
+        connect(vec_butt[i],&qt_button::fa_press,this,[=]{
+            //点击不同好友的反馈==========测试
+            QString temp = vec_butt[i]->get_txt();
+            out<<"点击了："+temp;
+        });
+    }
+}
