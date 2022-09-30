@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QPushButton>
-//#include <QEnterEvent>
+#include <QEnterEvent>
 #include <QPaintEvent>
 #include <QPainter>
 #include <QPen>

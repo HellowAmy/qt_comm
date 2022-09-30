@@ -74,6 +74,11 @@ wid_login::wid_login(QWidget *parent)
 
 }
 
+wid_login::~wid_login()
+{
+    delete v_reginster;
+}
+
 bool wid_login::return_detail(QString detail, QString &account, QString &passwd)
 {
     account=detail.section("#",1,1);

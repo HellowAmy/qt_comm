@@ -12,8 +12,8 @@ SOURCES += \
     main.cpp \
     qt_butt_friend.cpp \
     qt_button.cpp \
-    qt_csv.cpp \
     qt_edit.cpp \
+    qt_edit_text.cpp \
     qt_move_it.cpp \
     tcp_socket.cpp \
     wid_change.cpp \
@@ -22,14 +22,15 @@ SOURCES += \
     wid_login.cpp \
     wid_manage.cpp \
     wid_register.cpp \
+    wid_talk.cpp \
     widget.cpp
 
 HEADERS += \
     c_define.h \
     qt_butt_friend.h \
     qt_button.h \
-    qt_csv.h \
     qt_edit.h \
+    qt_edit_text.h \
     qt_move_it.h \
     tcp_socket.h \
     wid_change.h \
@@ -38,6 +39,7 @@ HEADERS += \
     wid_login.h \
     wid_manage.h \
     wid_register.h \
+    wid_talk.h \
     widget.h
 
 FORMS += \

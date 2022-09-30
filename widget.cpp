@@ -14,7 +14,7 @@
 
 #include "tcp_socket.h"
 
-#include "qt_csv.h"
+#include "wid_talk.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -22,9 +22,8 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
 
-//    wid_manage
-//    wid_manage *wid_l=new wid_manage;
-//    wid_l->hide();
+    wid_manage *wid_l=new wid_manage;
+    wid_l->hide();
 
 //    wid_register *wid_r=new wid_register;
 //    wid_r->show();
@@ -32,27 +31,25 @@ Widget::Widget(QWidget *parent)
 //    wid_friends_list *wid_f=new wid_friends_list;
 //    wid_f->show();
 
-
-//    bool ji = qt_csv::file_to_vector(fi,vec);
-//    bool ji2 = qt_csv::vector_to_file(vec,fi);
-//    out<<ji<<ji2;
+//    wid_talk *wid_t=new wid_talk;
+//    wid_t->show();
 
 
-    tcp_socket *ts=new tcp_socket(this);
-    ts->open_socket("192.168.188.139",5005);
+    //    tcp_socket *ts=new tcp_socket(this);
+    //    ts->open_socket("192.168.188.130",5005);
+
+    //    out<<ts->get_host_ip();
+
+//    connect(ts,&tcp_socket::fa_connect_socket,this,[=](){
+//        out<<"=====ok_socket=====";
+////        ts->write_word("192.168.188.100",5005,"000ahfuahskfjagfia000");
 
 
-//    ts->close();
-    connect(ts,&tcp_socket::fa_connect_socket,this,[=](){
-        out<<"=====ok_socket=====";
-        ts->write_word("192.168.188.100",5005,"000ahfuahskfjagfia000");
-
-
-        //传送内容信号
-        connect(ts,&tcp_socket::readyRead,[=](){
-            out<<"op: "<<ts->readAll();
-        });
-    });
+//        //传送内容信号
+//        connect(ts,&tcp_socket::readyRead,[=](){
+//            out<<"op: "<<ts->readAll();
+//        });
+//    });
 
 
 

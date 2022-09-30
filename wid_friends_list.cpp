@@ -17,7 +17,7 @@ wid_friends_list::wid_friends_list(QWidget *parent)
     area->setFrameShape(QFrame::NoFrame);
     area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏横向滚动条
     area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏竖向滚动条
-    area->setPalette(QPalette(QPalette::Window,(QColor(255,0,0,0))));//设置窗口背景透明
+    area->setPalette(QPalette(QPalette::Window,(QColor(0,0,0,0))));//设置窗口背景透明
     area->setWidget(wid_temp);
 
     //关闭位置

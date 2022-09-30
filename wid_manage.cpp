@@ -9,7 +9,7 @@ wid_manage::wid_manage(QWidget *parent)
 
     //好友列表
     v_friends_list = new wid_friends_list;
-    v_friends_list->hide();
+    v_friends_list->close();
 
 
     connect(v_login,&wid_login::fa_info,this,[=](QString str){

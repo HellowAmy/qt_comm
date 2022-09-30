@@ -26,13 +26,11 @@ public:
 signals:
 
 protected:
-    //滑动区
     QScrollArea *area;
     QWidget *wid_temp;
+    qt_button *butt_close;
 
-    qt_button *butt_close;//关闭按钮
-
-    QVector<qt_button *>vec_butt;//按钮容器
+    QVector<qt_button *>vec_butt;
     int v_wide=250;
     int v_high=600;
     int v_less=100;

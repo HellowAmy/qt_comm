@@ -31,15 +31,18 @@ void tcp_socket::write_word(QString ip, int port, QString word)
     this->write(temp.toUtf8());
 }
 
+
+#include <QDebug>
+#define out qDebug()
+
 QString tcp_socket::get_host_ip()
 {
     //获取自身IP地址 （本机IP）
-    QString ip_self;
-    for(QHostAddress address : QNetworkInterface::allAddresses())
+    for(auto address : QNetworkInterface::allAddresses())
     {
-        //排除IPV6，排除回环地址
-        if(address.protocol() == QAbstractSocket::IPv4Protocol
-                && address != QHostAddress::LocalHost) ip_self= address.toString();//地址转文本
+        //只要IPv4
+        if(address.protocol() == QAbstractSocket::IPv4Protocol)
+            return address.toString();//地址转文本
     }
-    return ip_self;
+    return "";
 }

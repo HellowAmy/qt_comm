@@ -6,7 +6,6 @@
 #include <QPoint>
 #include <QPaintEvent>
 #include <QPainter>
-#include <QEvent>
 
 class wid_change : public QWidget
 {

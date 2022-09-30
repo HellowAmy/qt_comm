@@ -15,6 +15,7 @@ class wid_login : public wid_change
     Q_OBJECT
 public:
     explicit wid_login(QWidget *parent = nullptr);
+    ~wid_login();
 
     //（参数1：传入请求连接信号发送值）（参数2：返回的账号）（参数3：返回的密码）
     //（返回值：是否可以连接）
