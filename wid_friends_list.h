@@ -12,6 +12,7 @@
 #include "qt_move_it.h"
 #include "qt_butt_friend.h"
 #include "c_define.h"
+#include "qt_area_slide.h"
 
 class wid_friends_list : public wid_change
 {
@@ -26,11 +27,11 @@ public:
 signals:
 
 protected:
-    QScrollArea *area;
-    QWidget *wid_temp;
+    QVector<qt_button *>vec_butt;
+    QWidget *wid_slide;
+    qt_area_slide *area;
     qt_button *butt_close;
 
-    QVector<qt_button *>vec_butt;
     int v_wide=250;
     int v_high=600;
     int v_less=100;

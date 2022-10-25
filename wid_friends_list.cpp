@@ -9,25 +9,22 @@ wid_friends_list::wid_friends_list(QWidget *parent)
     this->open_backdrop(":/pic/pic_bake_friends_list.png");
 
     //创建滑动区域
-    wid_temp = new QWidget(this);
-    wid_temp->resize(v_wide+20,v_high);
-    area = new QScrollArea(this);
+    area = new qt_area_slide(this);
+    wid_slide = area->get_wid_slide();
+    wid_slide->resize(v_wide+20,v_high);
     area->move(0,v_less/2);
     area->resize(v_wide+20,v_high-v_less);
-    area->setFrameShape(QFrame::NoFrame);
-    area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏横向滚动条
-    area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏竖向滚动条
+    area->less_frame();
     area->setPalette(QPalette(QPalette::Window,(QColor(0,0,0,0))));//设置窗口背景透明
-    area->setWidget(wid_temp);
 
     //关闭位置
     butt_close = new qt_button(this);
     butt_close->resize(100,45);
+    butt_close->move(this->width()/2 - butt_close->width()/2,
+                     this->height() - butt_close->height());
     butt_close->set_txt("<=退出=>");
-    int x=this->width()/2 - butt_close->width()/2;
-    int y=this->height() - butt_close->height();
-    butt_close->move(x,y);
 
+    //== 测试===
     QVector<QString> vet_s;
     for(int i=0;i<100;i++)
     {
@@ -46,7 +43,7 @@ void wid_friends_list::set_friends(QVector<QString> vec_str)
     //为容器创建按钮
     for(int i=0;i<vec_str.size();i++)
     {
-        qt_button *temp=new qt_button(wid_temp);
+        qt_button *temp=new qt_button(wid_slide);
         temp->set_txt(vec_str[i]);//按钮名称
         temp->resize(v_wide-4,v_less/2);//设置按钮大小
 
@@ -54,14 +51,14 @@ void wid_friends_list::set_friends(QVector<QString> vec_str)
     }
 
     //添加到自动排序容器
-    qt_move_it *vec_move = new qt_move_it(wid_temp);
+    qt_move_it *vec_move = new qt_move_it(wid_slide);
     for(int i=0;i<vec_str.size();i++)
     {
         vec_move->add_wid(vec_butt[i]);//添加到自动排序容器
     }
     vec_move->set_vert(QPoint(0,0));//设置排序方式
 
-    wid_temp->resize(v_wide+20,vec_move->get_count_high());//根据按钮数量设置窗口大小
+    wid_slide->resize(v_wide+20,vec_move->get_count_high());//根据按钮数量设置窗口大小
 
     //容器按钮信号槽
     for(int i=0;i<vec_butt.size();i++)

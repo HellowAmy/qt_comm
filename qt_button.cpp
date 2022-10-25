@@ -36,8 +36,11 @@ void qt_button::paintEvent(QPaintEvent *)
     QPainter *show=new QPainter(this);
     show->setPen(v_pen);
     show->setRenderHint(QPainter::Antialiasing);
-    QRect rect(v_space,v_space,this->width()-v_space-1,this->height()-v_space-1);
-    QRect rect2(v_space*2,v_space*2,this->width()-v_space*3-1,this->height()-v_space*3-1);
+
+    QRect rect(v_space,v_space,
+               this->width()-v_space-1,this->height()-v_space-1);
+    QRect rect2(v_space*2,v_space*2,
+                this->width()-v_space*3-1,this->height()-v_space*3-1);
 
     //设置窗口圆角，百分比
     show->drawRoundedRect(rect,50,50,Qt::RelativeSize);
