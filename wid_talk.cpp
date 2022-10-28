@@ -1,8 +1,12 @@
 #include "wid_talk.h"
 
+#include <QDebug>
+#define out qDebug()
+
 wid_talk::wid_talk(QWidget *parent)
     : wid_change{parent}
 {
+    //本窗口初始化
     this->resize(600,600);
     this->open_translucent();
     this->open_lessframe();
@@ -25,63 +29,31 @@ wid_talk::wid_talk(QWidget *parent)
     butt_transmit->move(this->width()-butt_transmit->width()*2,
                         this->height() - butt_transmit->height() - 5);
     butt_transmit->set_txt("发送");
+    butt_transmit->show();
 
-
-
-//    //添加
-//    qt_news_word *bu = new qt_news_word;
-//    bu->set_word("hellow world");
-//    bu->resize(450,60);
-
-//    qt_news_word *bu2 = new qt_news_word;
-//    bu2->set_word("hellow world");
-//    bu2->resize(450,60);
-
-
+    //消息滑动窗口
     wid_show = new wid_slide_list(this);
-//    wid_show->setPalette(QPalette(QPalette::Window,(QColor(0,0,0,0))));//设置窗口背景透明
-//    wid_show->setWindowFlag(Qt::FramelessWindowHint);//无边框
-//    wid_show->setAttribute(Qt::WA_TranslucentBackground);//背景透明
-    wid_show->set_size(this->width() - 60*2,350);
     wid_show->move(60,50);
-//    wid_show->add_widget(bu);
-//    wid_show->add_widget(bu2);
-    wid_show->add_widget(new qt_news_word("asdah11黄sd1",false));
-//    QThread::sleep(2);
-    wid_show->add_widget(new qt_news_word("asda22黄sd2",false));
-//    QThread::sleep(1);
-    wid_show->add_widget(new qt_news_word("asd33黄asd3"));
-//    wid_show->add_widget(bu2);
-////    wid_show->add_widget(&qt_news_word());
-//    wid_show->add_widget(bu);
+    wid_show->set_size(this->width() - 60*2,350);
 
+    //设置窗口背景透明
+    wid_show->setPalette
+            (QPalette(QPalette::Window,(QColor(0,0,0,0))));
 
+//    wid_show->add_widget(new qt_news_word("abok",false));
+//    wid_show->add_widget(new qt_news_word("niha",false));
+//    wid_show->add_widget(new qt_news_word("好滴"));
+//    wid_show->add_widget(new qt_news_word("我咋"));
 
+    //发送信号--按钮
+    connect(butt_transmit,&qt_button::fa_press,this,[=](){
+        send_word();
+    });
 
-
-
-
-    //==test
-//    QLabel *hu = new QLabel(this);
-//    hu->resize(500,100);
-//    hu->setText("qingshura请输入文字");
-////    hu->setPalette(QColor(0xf18383));//f18383 f65151
-////    QFont f;
-////    f.setBold(true);
-////    f.setFamily("微软雅黑");
-////    f.setPointSize(16);
-////    hu->setFont(f);
-//    hu->setFont(QFont("微软雅黑",16));
-//    hu->setPalette(QPalette(QPalette::WindowText,0xf18383));
-//    hu->setFrameShape(QFrame::Box);
-//    hu->show();
-
-//    QFontMetrics me(QFont("微软雅黑",16));
-
-//        me.size(Qt::TextSingleLine,str);
-
-
-
+    //发送信号--回车
+    connect(edit_in,&qt_edit_text::fa_press_enter,this,[=](){
+        send_word();
+    });
 
 }
 
@@ -102,4 +74,15 @@ void wid_talk::paintEvent(QPaintEvent *e)
                    pos_lien_down + QPoint(edit_in->width()+ edit_in->x(),0));
 
     show->end();
+}
+
+void wid_talk::send_word()
+{
+    //发送信息并清屏
+    QString word = edit_in->toPlainText();
+    if(word.isEmpty() == false)
+    {
+        wid_show->add_widget(new qt_news_word(word));
+        edit_in->setText("");
+    }
 }

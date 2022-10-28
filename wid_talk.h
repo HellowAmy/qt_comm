@@ -29,6 +29,10 @@ protected:
     QPoint pos_lien_down;
     void paintEvent(QPaintEvent *event) override;
 
+    void send_word();
+
+
+
 };
 
 #endif // WID_TALK_H

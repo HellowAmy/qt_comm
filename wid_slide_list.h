@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QVector>
+#include <QScrollBar>
 
 #include "qt_area_slide.h"
 #include "qt_news.h"
@@ -17,10 +18,13 @@ public:
     void set_size(int wide,int high);//设置可见窗口大小
     void set_space(int space);//设置添加滑动窗口间隔
 
+    QVector<QString> get_history();
+
 signals:
 
 protected:
-    QVector<qt_news*> vec_history;//历史容器
+    QVector<qt_news*> vec_news;//按钮容器
+    QVector<QString> vec_history;//历史容器
     qt_area_slide *area;//滑动区域
     int pos_current = 0;//当前的控件高度
     int v_space = 5;

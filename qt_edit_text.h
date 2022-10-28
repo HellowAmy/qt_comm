@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTextEdit>
 #include <QPainter>
+#include <QKeyEvent>
 
 class qt_edit_text : public QTextEdit
 {
@@ -11,7 +12,12 @@ class qt_edit_text : public QTextEdit
 public:
     explicit qt_edit_text(QWidget *parent = nullptr);
 
-signals:
+signals:   
+    emit void fa_press_enter();
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
 
 };
 
