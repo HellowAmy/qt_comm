@@ -66,7 +66,7 @@ void wid_friends_list::set_friends(QVector<QString> vec_str)
         connect(vec_butt[i],&qt_button::fa_press,this,[=]{
             //点击不同好友的反馈==========测试
             QString temp = vec_butt[i]->get_txt();
-            out<<"点击了："+temp;
+//            out<<"点击了："+temp;
         });
     }
 }

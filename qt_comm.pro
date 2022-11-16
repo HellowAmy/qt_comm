@@ -30,6 +30,7 @@ SOURCES += \
 
 HEADERS += \
     c_define.h \
+    protocol/ux_protocol.h \
     qt_area_slide.h \
     qt_butt_friend.h \
     qt_button.h \
@@ -38,6 +39,7 @@ HEADERS += \
     qt_move_it.h \
     qt_news.h \
     tcp_socket.h \
+    vlog.h \
     wid_change.h \
     wid_edit.h \
     wid_friends_list.h \

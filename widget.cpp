@@ -20,6 +20,8 @@
 
 #include "wid_slide_list.h"
 
+#include "vlog.h"
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
@@ -59,8 +61,17 @@ Widget::Widget(QWidget *parent)
     //! 长期链接：会记录账号，稳定长期联系
     //!
     //!
+    //! =====服务器账号管理=====
+    //! 创建生成账号的工具，生成的账号确保与文件内账号不重复
+    //! 暂时使用文件代替数据库，文件中保存账号密码
+    //! 启动服务器时将账号密码加载到容器提升速度
+    //! 账号注册时立刻更新文件
     //!
     //!
+
+
+
+
 
     //全局管理，开启见效
 //    wid_manage *wid_l=new wid_manage;
@@ -152,17 +163,60 @@ Widget::Widget(QWidget *parent)
 //    wid_friends_list *wid_f=new wid_friends_list;
 //    wid_f->show();
 
-    wid_talk *wid_t=new wid_talk;
-    wid_t->show();
+//    wid_talk *wid_t=new wid_talk;
+//    wid_t->show();
+
+//    vlog<<"asjdas"<<endl;
+
+//    vlog("in asdk=%d",123);
+//    show_word<QString>("asdasd");
+
+    out<<"init";
+
+    tcp_socket *ts = new tcp_socket(this);
+    ts->open_socket("192.168.188.2",5005);
+//    ts->recv_news();
+
+//    ct_cmd cmd;
+//    cmd.type = enum_transmit::e_register;
+
+//    ct_register ct;
+//    ct.passwd = 123482123;
+
+    connect(ts,&tcp_socket::connected,this,[=](){
+        out<<"=====ok_socket=====";
+
+        ts->send_register("123qwe");
+//        ts->send_register("qweasd");
+//        ts->send_login(12341,"gdgdsfg");
+//        ts->send_register("gdgdsfg");
+//        ts->send_register("asdfab72bd28111pp====");
+        ts->send_login(12341,"gdgdsfg");
+
+        ts->send_logout(12341);
+
+        ts->send_login(123123,"123123");
+        ts->send_register("123qwe");
 
 
-    //    tcp_socket *ts=new tcp_socket(this);
-    //    ts->open_socket("192.168.188.130",5005);
 
-    //    out<<ts->get_host_ip();
+        out<<"=====end=====";
+
+
+    });
+
+
+    connect(ts,&tcp_socket::fa_back_register,this,[=](long long ac,QString pa){
+        out<<ac<<"|"<<pa;
+    });
+
+    connect(ts,&tcp_socket::fa_back_login,this,[=](int flg,QString info){
+        out<<flg<<"|"<<info;
+    });
 
 //    connect(ts,&tcp_socket::fa_connect_socket,this,[=](){
-//        out<<"=====ok_socket=====";
+//        vlog<<"=====ok_socket====="<<endl;
+//        out<<"ok_in";
 ////        ts->write_word("192.168.188.100",5005,"000ahfuahskfjagfia000");
 
 

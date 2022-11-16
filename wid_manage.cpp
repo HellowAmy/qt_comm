@@ -25,7 +25,7 @@ wid_manage::wid_manage(QWidget *parent)
             v_login->close();
         }
 
-        out<<":"<<account<<passwd<<is_ok;
+//        out<<":"<<account<<passwd<<is_ok;
         //测试==============
 
     });

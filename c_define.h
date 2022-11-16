@@ -4,7 +4,7 @@
 //#include "c_define.h"
 
 //==============================================
-#define C_QT_OUT //开启QT打印
+//#define C_QT_OUT //开启QT打印
 //#define C_VS_OUT//开启VS打印
 
 //#define C_VS_FILE//开启VS打印
