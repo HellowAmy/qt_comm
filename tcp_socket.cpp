@@ -14,6 +14,10 @@ tcp_socket::tcp_socket(QObject *parent)
     map_func.insert(enum_transmit::e_login_back,
                     &tcp_socket::back_login);
 
+    //数据转发接收
+    map_func.insert(enum_transmit::e_swap_txt,
+                    &tcp_socket::back_swap_txt);
+
     //===== 接收函数登记 =====
 }
 
@@ -39,10 +43,7 @@ bool tcp_socket::send_register(const char *passwd)
         memset(&ct,0,sizeof(ct));
         strncpy(ct.passwd,passwd,sizeof(ct.passwd));
 
-        this->write((const char*)&cmd,sizeof(cmd));
-        this->write((const char*)&ct,sizeof(ct));
-        this->flush();
-        is_ok = true;
+        is_ok = send_back<ct_cmd,ct_register>(cmd,ct);
     }
 
     return is_ok;
@@ -64,37 +65,52 @@ bool tcp_socket::send_login(long long account, const char *passwd)
         memset(&ct,0,sizeof(ct));
         strncpy(ct.passwd,passwd,sizeof(ct.passwd));
         ct.account = account;
+        v_account  = account;
 
-        this->write((const char*)&cmd,sizeof(cmd));
-        this->write((const char*)&ct,sizeof(ct));
-        this->flush();
-        is_ok = true;
+        is_ok = send_back<ct_cmd,ct_login>(cmd,ct);
     }
 
     return is_ok;
 }
 
-bool tcp_socket::send_logout(long long account)
+bool tcp_socket::send_logout()
 {
     bool is_ok = false;
 
-    if(this->state() == QAbstractSocket::ConnectedState)
+    if(this->state() == QAbstractSocket::ConnectedState && is_login)
     {
         out<<"发送请求--退出账号";
 
         //先发送协议包头再发送协议类型
         ct_cmd cmd;
         cmd.type = enum_transmit::e_logout;
-
         ct_logout ct;
-        ct.account = account;
+        ct.account = v_account;
 
-        this->write((const char*)&cmd,sizeof(cmd));
-        this->write((const char*)&ct,sizeof(ct));
-        this->flush();
-        is_ok = true;
+        is_ok = send_back<ct_cmd,ct_logout>(cmd,ct);
     }
 
+    return is_ok;
+}
+
+bool tcp_socket::send_swap_txt(long long to_account, QString data)
+{
+    bool is_ok = false;
+    if(this->state() == QAbstractSocket::ConnectedState && is_login)
+    {
+        out<<"发送请求--转发数据";
+
+        //先发送协议包头再发送协议类型
+        ct_cmd cmd;
+        cmd.type = enum_transmit::e_swap_txt;
+
+        ct_swap_txt ct;
+        ct.account_from = v_account;
+        ct.account_to = to_account;
+        strncpy(ct.data,data.toStdString().c_str(),sizeof(ct.data));
+
+        is_ok = send_back<ct_cmd,ct_swap_txt>(cmd,ct);
+    }
     return is_ok;
 }
 
@@ -109,15 +125,19 @@ void tcp_socket::recv_news()
             static ct_cmd cmd;
             static bool is_head = true;//判断本次为包头
 
+            out<<"recv size: "<<this->size()<<"|cmd size: "<<sizeof(cmd);
+
             //拆包头--分析对应类型
             if(is_head)
             {
                 is_head = false;
                 int size = this->read((char*)&cmd,sizeof(cmd));
-                if(size != sizeof(cmd)) is_head = true;
-
-                out<<"[in]包头解析--读取结束状态:"<<is_head
-                    <<" | 类型: "<<cmd.type;
+                if(size != sizeof(cmd))
+                {
+                    is_head = true;
+                    this->readAll();
+                }
+                out<<"[in]包头解析--读取结束状态:"<<is_head<<" | 类型: "<<cmd.type;
             }
             else//分析类型
             {
@@ -132,7 +152,7 @@ void tcp_socket::recv_news()
                 }
                 else
                 {
-                    out<<"查找匹配函数失败";
+                    out<<"查找匹配函数失败: "<<cmd.type;
                     this->readAll();
                 }
             }
@@ -150,14 +170,17 @@ bool tcp_socket::back_register()
     memset(&ct_back,0,sizeof (ct_back));
     int size = this->read((char*)&ct_back,sizeof(ct_back));
 
-    if(size > 0)
+    if(size == sizeof(ct_back))
     {
         out<<"接收状态--成功";
-        QString str_passwd;
-        str_passwd = ct_back.passwd;
+        QString str_passwd = ct_back.passwd;
         emit fa_back_register(ct_back.account,str_passwd);
     }
-    else out<<"接收状态--失败";
+    else
+    {
+        this->readAll();
+        out<<"接收状态--失败";
+    }
 
     return is_end;
 }
@@ -171,14 +194,60 @@ bool tcp_socket::back_login()
     memset(&ct_back,0,sizeof (ct_back));
     int size = this->read((char*)&ct_back,sizeof(ct_back));
 
-    if(size > 0)
+    if(size == sizeof(ct_back))
     {
         out<<"接收状态--成功";
-        QString str_info;
-        str_info = ct_back.info;
+        QString str_info = "登录失败";
+        if(ct_back.flg == 1)
+        {
+            is_login = true;
+            str_info = "登录成功";
+        }
         emit fa_back_login(ct_back.flg,str_info);
     }
-    else out<<"接收状态--失败";
+    else
+    {
+        this->readAll();
+        out<<"接收状态--失败";
+    }
 
     return is_end;
+}
+
+bool tcp_socket::back_swap_txt()
+{
+    bool is_end = true;
+
+    out<<"进入接收函数--账号登录";
+    ct_swap_txt ct_swap;
+    memset(&ct_swap,0,sizeof (ct_swap));
+    int size = this->read((char*)&ct_swap,sizeof(ct_swap));
+
+    if(size == sizeof(ct_swap))
+    {
+        out<<"接收状态--成功";
+        QString str_txt = ct_swap.data;
+        emit fa_swap_txt(ct_swap.account_from,str_txt);
+    }
+    else
+    {
+//        this->readAll();
+        out<<"接收状态--失败";
+    }
+
+    return is_end;
+}
+
+template<class Tcmd, class Tct>
+bool tcp_socket::send_back(Tcmd cmd, Tct ct)
+{
+    bool is_ok = false;
+    int count = 0;
+
+    count += this->write((const char*)&cmd,sizeof(cmd));
+    count += this->write((const char*)&ct,sizeof(ct));
+    this->flush();
+
+    if(count == (sizeof(cmd) + sizeof(ct))) is_ok = true;
+    return is_ok;
 }

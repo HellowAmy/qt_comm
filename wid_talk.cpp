@@ -13,6 +13,22 @@ wid_talk::wid_talk(QWidget *parent)
     this->open_backdrop(":/pic/pic_bake_talk.png");
     this->show();
 
+
+    //== 标题 ==
+    lab_title = new QLabel(this);
+    lab_title->show();
+    lab_title->move(-5,-5);
+    lab_title->resize(this->width()+10,40+5);
+    lab_title->setText("===== ? =====");
+    lab_title->setFont(QFont("微软雅黑",16));
+    lab_title->setAlignment(Qt::AlignCenter);
+    lab_title->setFrameShape(QFrame::Box);
+    QPalette pe;
+    pe.setColor(QPalette::WindowText,0xe96366);
+    lab_title->setPalette(pe);
+    //== 标题 ==
+
+
     //输入框初始化
     int space = 60;//输入框与底部间隔
     edit_in = new qt_edit_text(this);
@@ -26,10 +42,18 @@ wid_talk::wid_talk(QWidget *parent)
 
     //按钮——发送到服务器
     butt_transmit = new qt_button(this);
-    butt_transmit->move(this->width()-butt_transmit->width()*2,
+    butt_transmit->move(this->width() - butt_transmit->width()*2,
                         this->height() - butt_transmit->height() - 5);
     butt_transmit->set_txt("发送");
     butt_transmit->show();
+
+
+    //按钮——隐藏窗口
+    butt_hide = new qt_button(this);
+    butt_hide->move(20,this->height() - butt_hide->height() - 5);
+    butt_hide->set_txt("关闭");
+    butt_hide->show();
+
 
     //消息滑动窗口
     wid_show = new wid_slide_list(this);
@@ -39,11 +63,6 @@ wid_talk::wid_talk(QWidget *parent)
     //设置窗口背景透明
     wid_show->setPalette
             (QPalette(QPalette::Window,(QColor(0,0,0,0))));
-
-//    wid_show->add_widget(new qt_news_word("abok",false));
-//    wid_show->add_widget(new qt_news_word("niha",false));
-//    wid_show->add_widget(new qt_news_word("好滴"));
-//    wid_show->add_widget(new qt_news_word("我咋"));
 
     //发送信号--按钮
     connect(butt_transmit,&qt_button::fa_press,this,[=](){
@@ -55,6 +74,15 @@ wid_talk::wid_talk(QWidget *parent)
         send_word();
     });
 
+    //隐藏窗口
+    connect(butt_hide,&qt_button::fa_press,this,[=](){
+        this->hide();
+    });
+}
+
+void wid_talk::set_title(QString str)
+{
+    lab_title->setText(str);
 }
 
 void wid_talk::paintEvent(QPaintEvent *e)
@@ -85,4 +113,11 @@ void wid_talk::send_word()
         wid_show->add_widget(new qt_news_word(word));
         edit_in->setText("");
     }
+
+    //==test history ret
+//    QVector<QString> vec = wid_show->get_history();
+//    for(auto a:vec)
+//    {
+//        out<<"in: "<<a<<endl;
+//    }
 }

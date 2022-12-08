@@ -65,94 +65,26 @@ Widget::Widget(QWidget *parent)
     //! 创建生成账号的工具，生成的账号确保与文件内账号不重复
     //! 暂时使用文件代替数据库，文件中保存账号密码
     //! 启动服务器时将账号密码加载到容器提升速度
-    //! 账号注册时立刻更新文件
+    //! 程序退出时注册账号更新到文件
     //!
+    //! =====数据转发=====
+    //! 服务器无需多问，寻找账号并转发，客户端根据类型转发接收
+    //!
+    //! 文字：对方账号、数据、一次发完
+    //! 文件：对方账号、数据、多次发完、标记类型、
+    //!         标记总量、标记当前发送大小、标记累计大小
     //!
 
 
 
 
-
+#if 1
     //全局管理，开启见效
-//    wid_manage *wid_l=new wid_manage;
-//    wid_l->hide();
-
+    wid_manage *wid_l=new wid_manage;
+    wid_l->hide();
+#endif
 
     //==测试单元==
-
-
-    //== 换行
-//    this->show();
-//    QFont font("微软雅黑",16);
-////    QLabel hu
-//    QString str = "123";
-//    QString str2 = "12345678asdfagsdfaygsd111";
-//    QFontMetrics me(font);
-//    out<<me.size(Qt::TextSingleLine,str);
-//    out<<me.size(Qt::TextSingleLine,str2);
-
-//    QLabel *hu = new QLabel(this);
-//    hu->resize(100,100);
-//    hu->setWordWrap(true);
-//    hu->setText(str);
-//    hu->setFrameShape(QFrame::Box);
-//    hu->show();
-
-//    QLabel *hu2 = new QLabel(this);
-//    hu2->move(100,100);
-//    hu2->resize(100,100);
-//    hu2->setWordWrap(true);
-//    hu2->setText(str2);
-//    hu2->setFrameShape(QFrame::Box);
-//    hu2->show();
-
-//    this->resize(me.size(Qt::TextSingleLine,str));
-//    this->resize(me.size(Qt::TextSingleLine,str));
-    //== 换行
-
-
-//    this->show();
-//    QLabel *hu = new QLabel(this);
-//    hu->resize(500,100);
-//    hu->setText("qingshura请输入文字");
-//    hu->setFont(QFont("微软雅黑",12));
-//    hu->setFrameShape(QFrame::Box);
-//    hu->show();
-
-
-//    wid_slide_list *ju = new wid_slide_list(this);
-//    ju->move(10,10);
-//    ju->set_size(100,100);
-
-//    for(int i=0;i<20;i++)
-//    {
-//        QLabel *hu = new QLabel;
-////        hu->show();
-//        hu->resize(100,30);
-//        hu->setFrameShape(QFrame::Box);
-//        QString tr = "这是第"+QString::number(i)+"位";
-//        hu->setText(tr);
-//        ju->add_widget(hu);
-//    }
-
-
-
-
-
-//    qt_area_slide *fd = new qt_area_slide(this);
-//    fd->setFrameShape(QFrame::Box);
-////    fd->show();
-//    fd->move(100,100);
-//    fd->set_size_area(100,100);
-//    fd->set_size_wid(100,500);
-//    QWidget *hu = fd->get_wid_slide();
-
-
-//    QPushButton *t1 = new QPushButton(hu);
-//    t1->show();
-//    QPushButton *t2 = new QPushButton(hu);
-//    t2->show();
-//    t2->move(0,20);
 
 
 
@@ -171,48 +103,132 @@ Widget::Widget(QWidget *parent)
 //    vlog("in asdk=%d",123);
 //    show_word<QString>("asdasd");
 
-    out<<"init";
-
-    tcp_socket *ts = new tcp_socket(this);
-    ts->open_socket("192.168.188.2",5005);
-//    ts->recv_news();
-
-//    ct_cmd cmd;
-//    cmd.type = enum_transmit::e_register;
-
-//    ct_register ct;
-//    ct.passwd = 123482123;
-
-    connect(ts,&tcp_socket::connected,this,[=](){
-        out<<"=====ok_socket=====";
-
-        ts->send_register("123qwe");
-//        ts->send_register("qweasd");
-//        ts->send_login(12341,"gdgdsfg");
-//        ts->send_register("gdgdsfg");
-//        ts->send_register("asdfab72bd28111pp====");
-        ts->send_login(12341,"gdgdsfg");
-
-        ts->send_logout(12341);
-
-        ts->send_login(123123,"123123");
-        ts->send_register("123qwe");
 
 
 
-        out<<"=====end=====";
 
 
-    });
 
 
-    connect(ts,&tcp_socket::fa_back_register,this,[=](long long ac,QString pa){
-        out<<ac<<"|"<<pa;
-    });
 
-    connect(ts,&tcp_socket::fa_back_login,this,[=](int flg,QString info){
-        out<<flg<<"|"<<info;
-    });
+//    out<<"init";
+
+//    tcp_socket *ts = new tcp_socket(this);
+//    ts->open_socket("192.168.188.2",5005);
+
+//    connect(ts,&tcp_socket::connected,this,[=](){
+//        out<<"=====ok_socket=====";
+//        ts->send_login(6334967572,"123qwe");
+//        QThread::sleep(1);
+//        out<<"=====end=====";
+//    });
+
+//    connect(ts,&tcp_socket::fa_back_login,this,[=](int flg,QString info){
+//        out<<"=====fa_back_login=====";
+//        out<<flg<<"|"<<info;
+//        QThread::sleep(1);
+////        ts->send_swap_txt(1934865572,"0003qweasdhabwh吴建豪的dasdasdgbdsfg0000");
+//        for(int i=0;i<5;i++)
+//        {
+//            ts->send_swap_txt(1934865572,"0003qweasdhabwh吴建豪的dasdasdgbdsfg0000");
+//            ts->flush();
+//            QThread::sleep(1);
+//        }
+//        out<<"=====fa_back_login=====";
+//    });
+
+//    connect(ts,&tcp_socket::fa_swap_txt,
+//            this,[=](long long account_from,QString txt){
+//        out<<"=====ts:fa_swap_txt=====";
+//        out<<account_from<<"|"<<txt;
+////        QThread::sleep(1);
+////        ts->send_swap_txt(account_from,"bababababbbabababababab");
+//        out<<"=====ts:fa_swap_txt=====";
+//    });
+
+//    tcp_socket *ts1 = new tcp_socket(this);
+//    ts1->open_socket("192.168.188.2",5005);
+
+//    connect(ts1,&tcp_socket::connected,this,[=](){
+//        out<<"=====ok_socket=====";
+//        ts1->send_login(1934865572,"123qwe");
+//        QThread::sleep(1);
+//        out<<"=====end=====";
+//    });
+
+//    connect(ts1,&tcp_socket::fa_back_login,this,[=](int flg,QString info){
+//        out<<"=====fa_back_login=====";
+//        out<<flg<<"|"<<info;
+//        out<<"=====fa_back_login=====";
+//    });
+
+//    connect(ts1,&tcp_socket::fa_swap_txt,
+//            this,[=](long long account_from,QString txt){
+//        out<<"=====ts1:fa_swap_txt=====";
+//        out<<account_from<<"|"<<txt;
+////        QThread::sleep(1);
+//        ts1->send_swap_txt(account_from,"fafafafafafafafafafafa");
+//        out<<"=====ts1:fa_swap_txt=====";
+//    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    QThread::sleep(1);
+//    out<<"init2";
+//    QThread::sleep(1);
+
+//    tcp_socket *ts2 = new tcp_socket(this);
+//    ts2->open_socket("192.168.188.2",5005);
+
+//    connect(ts2,&tcp_socket::connected,this,[=](){
+//        out<<"=====ok_socket=====";
+//        ts2->send_login(1934865572,"123qwe");
+//        QThread::sleep(1);
+//        out<<"=====end=====";
+//    });
+
+//    QThread::sleep(1);
+//    QThread::sleep(1);
+
+//    connect(ts2,&tcp_socket::fa_back_login,this,[=](){
+//QThread::sleep(1);
+//        ts2->send_swap_txt(6334967572,"1111111");
+//        ts2->send_swap_txt(6334967572,"12874ajshd782haudg72gayfsdg7asdu");
+//        out<<"=====fa_back_login end=====";
+//    });
+//    QThread::sleep(1);
+
+//    connect(ts,&tcp_socket::fa_swap_txt,this,[=](long long account_from,QString txt){
+//        out<<"txt:"<<account_from<<"|"<<txt;
+//    });
+
+
+
+
+
+
+
+
+
+//    connect(ts,&tcp_socket::fa_back_login,this,[=](int flg,QString info){
+//        out<<flg<<"|"<<info;
+//    });
+
+//    connect(ts,&tcp_socket::fa_back_register,
+//            this,[=](long long account,QString passwd){
+//        out<<account<<"|"<<passwd;
+//    });
 
 //    connect(ts,&tcp_socket::fa_connect_socket,this,[=](){
 //        vlog<<"=====ok_socket====="<<endl;

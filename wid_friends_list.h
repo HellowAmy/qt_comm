@@ -5,6 +5,7 @@
 #include <QScrollArea>
 #include <QPicture>
 #include <QPen>
+#include <QMap>
 
 #include "wid_change.h"
 #include "wid_edit.h"
@@ -13,6 +14,7 @@
 #include "qt_butt_friend.h"
 #include "c_define.h"
 #include "qt_area_slide.h"
+#include <wid_talk.h>
 
 class wid_friends_list : public wid_change
 {
@@ -27,7 +29,8 @@ public:
 signals:
 
 protected:
-    QVector<qt_button *>vec_butt;
+    QVector<qt_button*>vec_butt;//好友按键容器
+    QMap<qt_button*,wid_talk*> map_wid_talk;
     QWidget *wid_slide;
     qt_area_slide *area;
     qt_button *butt_close;

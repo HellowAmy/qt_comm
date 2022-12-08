@@ -20,12 +20,13 @@ class qt_news : public QWidget
     Q_OBJECT
 public:
     explicit qt_news(QWidget *parent = nullptr);
-    virtual QString to_string_info() = 0;
     void set_size(int wide,int high);
     void set_self(bool self);
     void set_news_time(QString time);
     QString get_self_str(bool self);
     QWidget* get_news_wid();
+
+    virtual QString to_string_info() = 0;
 
 signals:
 

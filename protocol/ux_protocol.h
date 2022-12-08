@@ -13,7 +13,7 @@ enum enum_transmit
 
     e_logout,
     e_error,
-    e_transmit
+    e_swap_txt
 };
 
 struct ct_cmd
@@ -41,7 +41,6 @@ struct ct_login
 struct ct_login_back
 {
     int flg;
-    char info[64];
 };
 
 struct ct_logout
@@ -55,7 +54,7 @@ struct ct_error
     char error[64];
 };
 
-struct ct_transmit
+struct ct_swap_txt
 {
     long long account_from;
     long long account_to;
