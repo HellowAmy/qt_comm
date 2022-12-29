@@ -1,12 +1,13 @@
 #ifndef WID_MANAGE_H
 #define WID_MANAGE_H
 
-#include <QWidget>
+//#include <QWidget>
+#include <QObject>
 
 #include "wid_login.h"
 #include "wid_friends_list.h"
 
-class wid_manage : public QWidget
+class wid_manage : public QObject
 {
     Q_OBJECT
 public:

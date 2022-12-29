@@ -1,7 +1,7 @@
 #include "wid_manage.h"
 
 wid_manage::wid_manage(QWidget *parent)
-    : QWidget{parent}
+    : QObject{parent}
 {
     //登录窗口
     v_login = new wid_login;

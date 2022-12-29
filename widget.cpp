@@ -80,8 +80,9 @@ Widget::Widget(QWidget *parent)
 
 #if 1
     //全局管理，开启见效
-    wid_manage *wid_l=new wid_manage;
-    wid_l->hide();
+//    wid_manage *wid_l=new wid_manage;
+//    wid_l->
+//    wid_l->hide();
 #endif
 
     //==测试单元==

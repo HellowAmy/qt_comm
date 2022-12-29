@@ -59,7 +59,7 @@ QString qt_news::to_info
     QString str_self = "YES";
     if(self == false) str_self = "NO";
 
-    return flg + type + flg + str_self + flg+ time + flg + content + flg;
+    return type + flg + str_self + flg+ time + flg + content;
 }
 
 void qt_news::draw_time(QPainter *show)
@@ -110,15 +110,8 @@ void qt_news::draw_time(QPainter *show)
     //===== 绘制时间文本和线框 =====
 }
 
-qt_news_word::qt_news_word(QWidget *parent)
-{
-
-}
-
 qt_news_word::qt_news_word(QString word,bool self)
 {
-    v_word = word;
-
     this->set_self(self);
     this->set_news_time(this->get_time());
 
@@ -145,15 +138,12 @@ qt_news_word::qt_news_word(QString word,bool self)
     //不同角色的显示对齐
     if(self == false)
     {
-        lab->setAlignment
-                (Qt::AlignLeft|Qt::AlignVCenter);
+        lab->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
     }
     else
     {
-        if(count > 1) lab->setAlignment
-                (Qt::AlignLeft|Qt::AlignVCenter);
-        else lab->setAlignment
-                (Qt::AlignRight|Qt::AlignVCenter);
+        if(count > 1) lab->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+        else lab->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
     }
 
     //重设界面大小匹配文字
@@ -171,18 +161,13 @@ qt_news_word::qt_news_word(QString word,bool self)
     lab->setText(word_new);
     QString str_self;
 
-    //消息格式：##[类型]##[对方]##[时间]##[内容]##
+    //消息格式：[类型]##[对方]##[时间]##[内容]
     v_info = to_info(type,self,str_news_time,word);
 }
 
 QString qt_news_word::to_string_info()
 {
     return v_info;
-}
-
-void qt_news_word::set_word(QString word)
-{
-    v_word = word;
 }
 
 int qt_news_word::size_calculate(QString word)

@@ -23,7 +23,7 @@ public:
 signals:
 
 protected:
-    QVector<qt_news*> vec_news;//按钮容器
+    QVector<qt_news*> vec_news;//消息显示界面容器
     QVector<QString> vec_history;//历史容器
     qt_area_slide *area;//滑动区域
     int pos_current = 0;//当前的控件高度

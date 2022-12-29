@@ -21,6 +21,7 @@ class wid_friends_list : public wid_change
     Q_OBJECT
 public:
     explicit wid_friends_list(QWidget *parent = nullptr);
+    ~wid_friends_list();
 
     //将容器内昵称转为按钮
     //（参数1：昵称容器）

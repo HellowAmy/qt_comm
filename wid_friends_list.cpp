@@ -38,7 +38,15 @@ wid_friends_list::wid_friends_list(QWidget *parent)
     set_friends(vet_s);
 
     //关闭窗口
-    connect(butt_close,&qt_button::fa_press,this,&QWidget::close);
+    connect(butt_close,&qt_button::fa_press,this,[=](){
+        for(auto &a:map_wid_talk) { a->close(); }
+        this->close();
+    });
+}
+
+wid_friends_list::~wid_friends_list()
+{
+    for(auto &a:map_wid_talk) { delete a; }
 }
 
 void wid_friends_list::set_friends(QVector<QString> vec_str)
