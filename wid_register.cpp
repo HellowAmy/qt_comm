@@ -1,4 +1,4 @@
-#include "wid_register.h"
+﻿#include "wid_register.h"
 
 wid_register::wid_register(QWidget *parent)
     : wid_change{parent}
@@ -35,15 +35,11 @@ wid_register::wid_register(QWidget *parent)
     vec_move->add_wid(butt_back);
     vec_move->set_vert();
 
-    connect(butt_transmit,&qt_button::fa_press,this,[=](){
-        //发送到服务器
+    //发送申请密码
+    connect(butt_transmit,&qt_button::fa_press,this,[=](){ 
+        emit fa_register_passwd(edit_passwd->get_txt());
     });
 
     //点击返回按钮
     connect(butt_back,&qt_button::fa_press,this,&wid_register::fa_back);
-
-    //============
-    //返回申请的账号
-    //============
-
 }

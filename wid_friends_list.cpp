@@ -1,4 +1,4 @@
-#include "wid_friends_list.h"
+﻿#include "wid_friends_list.h"
 
 wid_friends_list::wid_friends_list(QWidget *parent)
     : wid_change{parent}
@@ -16,7 +16,6 @@ wid_friends_list::wid_friends_list(QWidget *parent)
     area->resize(v_wide+20,v_high-v_less);
     area->less_frame();
     area->setPalette(QPalette(QPalette::Window,(QColor(0,0,0,0))));//背景透明
-
 
     //关闭位置
     butt_close = new qt_button(this);
@@ -42,6 +41,11 @@ wid_friends_list::wid_friends_list(QWidget *parent)
         for(auto &a:map_wid_talk) { a->close(); }
         this->close();
     });
+}
+
+void wid_friends_list::set_net(const shared_ptr<net_connect> &net)
+{
+    sp_net = net;
 }
 
 wid_friends_list::~wid_friends_list()
@@ -86,6 +90,7 @@ void wid_friends_list::set_friends(QVector<QString> vec_str)
             else it.value()->show();
 
             //点击不同好友的反馈==========测试
+//            sp_net->send_txt(187241241,"123qwe");
             QString temp = vec_butt[i]->get_txt();
 //            out<<"点击了："+temp;
         });

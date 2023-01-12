@@ -1,4 +1,4 @@
-#include "wid_login.h"
+﻿#include "wid_login.h"
 
 wid_login::wid_login(QWidget *parent)
     : wid_change{parent}
@@ -50,16 +50,12 @@ wid_login::wid_login(QWidget *parent)
         v_reginster->close();
     });
 
-    connect(butt_login,&qt_button::fa_press,this,[=](){
-        //（1）发送登录请求，进去网络连接(试探请求)
-        //（2）发送反馈信号
+    //注册密码
+    connect(v_reginster,&wid_register::fa_register_passwd,
+            this,&wid_login::fa_register_passwd);
 
-        //测试============
-        QString str="#"+edit_account->get_txt()
-                    +"#"+edit_passwd->get_txt()
-                    +"#"+"ok";
-        emit fa_info(str);
-        //测试============
+    connect(butt_login,&qt_button::fa_press,this,[=](){
+        emit fa_login(edit_account->get_txt(),edit_passwd->get_txt());
     });
 
     //进入注册界面
@@ -71,20 +67,9 @@ wid_login::wid_login(QWidget *parent)
 
     //关闭窗口
     connect(butt_close,&qt_button::fa_press,this,&QWidget::close);
-
 }
 
 wid_login::~wid_login()
 {
     delete v_reginster;
-}
-
-bool wid_login::return_detail(QString detail, QString &account, QString &passwd)
-{
-    account=detail.section("#",1,1);
-    passwd=detail.section("#",2,2);
-
-    QString temp = detail.section("#",3,3);
-    if(temp == "ok") return true;
-    else return false;
 }

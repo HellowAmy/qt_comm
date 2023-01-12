@@ -1,4 +1,4 @@
-#ifndef WID_FRIENDS_LIST_H
+﻿#ifndef WID_FRIENDS_LIST_H
 #define WID_FRIENDS_LIST_H
 
 #include <QWidget>
@@ -7,6 +7,7 @@
 #include <QPen>
 #include <QMap>
 
+#include "net_connect.h"
 #include "wid_change.h"
 #include "wid_edit.h"
 #include "qt_button.h"
@@ -21,6 +22,7 @@ class wid_friends_list : public wid_change
     Q_OBJECT
 public:
     explicit wid_friends_list(QWidget *parent = nullptr);
+    void set_net(const shared_ptr<net_connect> &net);
     ~wid_friends_list();
 
     //将容器内昵称转为按钮
@@ -36,10 +38,11 @@ protected:
     qt_area_slide *area;
     qt_button *butt_close;
 
+    shared_ptr<net_connect> sp_net;
+
     int v_wide=250;
     int v_high=600;
     int v_less=100;
-
 };
 
 #endif // WID_FRIENDS_LIST_H

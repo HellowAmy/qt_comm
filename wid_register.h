@@ -1,4 +1,4 @@
-#ifndef WID_REGISTER_H
+﻿#ifndef WID_REGISTER_H
 #define WID_REGISTER_H
 
 #include <QWidget>
@@ -17,6 +17,7 @@ public:
 
 signals:
     emit void fa_back();
+    emit void fa_register_passwd(QString passwd);
 
 protected:
     QLabel *lab_account;
