@@ -18,7 +18,7 @@ wid_manage::wid_manage(QWidget *parent)
 
     //好友列表
     v_friends_list = new wid_friends_list;
-    v_friends_list->close();
+    v_friends_list->show();
 
     v_register->func_register_back = [=](long long account,string passwd,bool ok){
         if(ok)

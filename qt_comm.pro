@@ -145,7 +145,12 @@ DISTFILES += \
     lib/web_sock/lib/libhv.so \
     lib/web_sock/lib/libhv_static.a
 
-win32: LIBS += -L$$PWD/lib/web_sock/lib/ -llibhv.dll
+#win32: LIBS += -L$$PWD/lib/web_sock/lib/ -llibhv.dll
+
+#INCLUDEPATH += $$PWD/lib/web_sock/include
+#DEPENDPATH += $$PWD/lib/web_sock/include
+
+unix:!macx: LIBS += -L$$PWD/lib/web_sock/lib/ -lhv
 
 INCLUDEPATH += $$PWD/lib/web_sock/include
 DEPENDPATH += $$PWD/lib/web_sock/include
