@@ -18,7 +18,7 @@ wid_manage::wid_manage(QWidget *parent)
 
     //好友列表
     v_friends_list = new wid_friends_list;
-    v_friends_list->show();
+    v_friends_list->close();
 
     v_register->func_register_back = [=](long long account,string passwd,bool ok){
         if(ok)
@@ -37,7 +37,9 @@ wid_manage::wid_manage(QWidget *parent)
 
     connect(v_login,&wid_login::fa_login,
             this,[=](QString account,QString passwd){
-        sp_net->open_client(account.toLongLong(),passwd.toStdString());
+
+        v_friends_list->show();
+//        sp_net->open_client(account.toLongLong(),passwd.toStdString());
     });
 
     connect(v_login,&wid_login::fa_register_passwd,

@@ -20,7 +20,6 @@ signals:
     emit void fa_register_passwd(QString passwd);
 
 protected:
-    QLabel *lab_account;
     wid_edit *edit_passwd;
     wid_edit *edit_passwd_ok;
     qt_button *butt_transmit;

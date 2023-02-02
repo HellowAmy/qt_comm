@@ -8,10 +8,6 @@ wid_register::wid_register(QWidget *parent)
     this->open_lessframe();
     this->open_backdrop(":/pic/pic_bake_login.png");
 
-    //显示注册账号
-    lab_account = new QLabel(this);
-    lab_account->hide();
-
     //输入密码
     edit_passwd = new wid_edit(this);
     edit_passwd->set_txt_lab("密码");

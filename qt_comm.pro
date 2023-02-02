@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    lab_tips.cpp \
     lib/vts/vts.cpp \
     main.cpp \
     ms_web_client.cpp \
@@ -27,12 +28,14 @@ SOURCES += \
     wid_login.cpp \
     wid_manage.cpp \
     wid_register.cpp \
+    wid_register_back.cpp \
     wid_slide_list.cpp \
     wid_talk.cpp \
     widget.cpp
 
 HEADERS += \
     c_define.h \
+    lab_tips.h \
     lib/vts/vts.h \
     lib/web_sock/include/AsyncHttpClient.h \
     lib/web_sock/include/Buffer.h \
@@ -122,6 +125,7 @@ HEADERS += \
     wid_login.h \
     wid_manage.h \
     wid_register.h \
+    wid_register_back.h \
     wid_slide_list.h \
     wid_talk.h \
     widget.h
