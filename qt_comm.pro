@@ -130,8 +130,8 @@ HEADERS += \
     wid_talk.h \
     widget.h
 
-FORMS += \
-    widget.ui
+#FORMS += \
+#    widget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

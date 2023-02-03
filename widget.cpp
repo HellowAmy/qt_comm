@@ -25,14 +25,9 @@
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::Widget)
 {
-    ui->setupUi(this);
-
-
-
     wid_register_back *w = new wid_register_back;
-    w->set_status(true,QString::number(1234567890),"asjhgdasd");
+    w->set_status(true,QString::number(1234567890));
     w->show();
 
     wid_register_back *w2 = new wid_register_back;
@@ -56,8 +51,4 @@ Widget::Widget(QWidget *parent)
 
 }
 
-Widget::~Widget()
-{
-    delete ui;
-}
 

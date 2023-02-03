@@ -16,14 +16,13 @@ class wid_register_back : public wid_change
     Q_OBJECT
 public:
     explicit wid_register_back(QWidget *parent = nullptr);
-    void set_status(bool status,QString account = "",QString passwd = "");
+    void set_status(bool status,QString account = "");
 signals:
     emit void fa_back();
 
 protected:
     lab_tips *lab_title;
-    wid_edit *edit_account;
-    wid_edit *edit_passwd;
+    lab_tips *lab_account;
     qt_button *butt_back;
 };
 
