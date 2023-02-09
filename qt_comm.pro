@@ -10,10 +10,10 @@ CONFIG += c++17
 
 SOURCES += \
     lab_tips.cpp \
-    lib/vts/vts.cpp \
+#    lib/vts/vts.cpp \
     main.cpp \
-    ms_web_client.cpp \
-    net_connect.cpp \
+#    ms_web_client.cpp \
+#    net_connect.cpp \
     qt_area_slide.cpp \
     qt_butt_friend.cpp \
     qt_button.cpp \
@@ -23,6 +23,7 @@ SOURCES += \
     qt_news.cpp \
 #    tcp_socket.cpp \
     wid_change.cpp \
+    wid_dialog.cpp \
     wid_edit.cpp \
     wid_friends_list.cpp \
     wid_login.cpp \
@@ -34,9 +35,9 @@ SOURCES += \
     widget.cpp
 
 HEADERS += \
-    c_define.h \
+#    c_define.h \
     lab_tips.h \
-    lib/vts/vts.h \
+#    lib/vts/vts.h \
     lib/web_sock/include/AsyncHttpClient.h \
     lib/web_sock/include/Buffer.h \
     lib/web_sock/include/Channel.h \
@@ -107,9 +108,9 @@ HEADERS += \
     lib/web_sock/include/singleton.h \
     lib/web_sock/include/wsdef.h \
     lib/web_sock/inter_sock.hpp \
-    ms_web_client.h \
-    net_connect.h \
-    protocol/ux_protocol.h \
+#    ms_web_client.h \
+#    net_connect.h \
+#    protocol/ux_protocol.h \
     qt_area_slide.h \
     qt_butt_friend.h \
     qt_button.h \
@@ -119,7 +120,9 @@ HEADERS += \
     qt_news.h \
 #    tcp_socket.h \
 #    vlog.h \
+    vts_vlog.h \
     wid_change.h \
+    wid_dialog.h \
     wid_edit.h \
     wid_friends_list.h \
     wid_login.h \
@@ -134,20 +137,20 @@ HEADERS += \
 #    widget.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+#qnx: target.path = /tmp/$${TARGET}/bin
+#else: unix:!android: target.path = /opt/$${TARGET}/bin
+#!isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
     pic.qrc
 
-DISTFILES += \
-    lib/web_sock/README.md \
-    lib/web_sock/lib/libhv.a \
-    lib/web_sock/lib/libhv.dll \
-    lib/web_sock/lib/libhv.dll.a \
-    lib/web_sock/lib/libhv.so \
-    lib/web_sock/lib/libhv_static.a
+#DISTFILES += \
+#    lib/web_sock/README.md \
+#    lib/web_sock/lib/libhv.a \
+#    lib/web_sock/lib/libhv.dll \
+#    lib/web_sock/lib/libhv.dll.a \
+#    lib/web_sock/lib/libhv.so \
+#    lib/web_sock/lib/libhv_static.a
 
 #win32: LIBS += -L$$PWD/lib/web_sock/lib/ -llibhv.dll
 

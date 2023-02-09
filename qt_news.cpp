@@ -38,6 +38,11 @@ QWidget *qt_news::get_news_wid()
     return wid_news;
 }
 
+qt_news::~qt_news()
+{
+
+}
+
 void qt_news::paintEvent(QPaintEvent *)
 {
     QPainter *show = new QPainter(this);
@@ -163,6 +168,11 @@ qt_news_word::qt_news_word(QString word,bool self)
 
     //消息格式：[类型]##[对方]##[时间]##[内容]
     v_info = to_info(type,self,str_news_time,word);
+}
+
+qt_news_word::~qt_news_word()
+{
+
 }
 
 QString qt_news_word::to_string_info()

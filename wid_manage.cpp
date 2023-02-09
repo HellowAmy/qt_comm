@@ -1,69 +1,66 @@
 ﻿#include "wid_manage.h"
 
+#include <QTimer>
+
 wid_manage::wid_manage(QWidget *parent)
     : QObject{parent}
 {
-    vinit_c(vlog::e_info);
-
-    //发送信息的网络连接
-    sp_net = make_shared<net_connect>();
-
-    //注册机
-    v_register = new ms_web_client;
-    v_register->open();
-
-    //登录窗口
-    v_login = new wid_login;
+    v_login = new wid_login;//登录窗口
     v_login->show();
 
-    //好友列表
-    v_friends_list = new wid_friends_list;
+    v_friends_list = new wid_friends_list;//好友列表
     v_friends_list->close();
 
-    v_register->func_register_back = [=](long long account,string passwd,bool ok){
-        if(ok)
+
+    QVector<ct_friends_info> vec;
+    vec.push_back(ct_friends_info{1256757890,"ty1256757890"});
+    vec.push_back(ct_friends_info{1251251890,"t212y1251251890"});
+    vec.push_back(ct_friends_info{1212471890,"1212471890"});
+    vec.push_back(ct_friends_info{3456757890,"阿uh"});
+    vec.push_back(ct_friends_info{6786757890,"阿角色大赛的"});
+    vec.push_back(ct_friends_info{1256757890,"4574"});
+    vec.push_back(ct_friends_info{8568464564,"3498斯蒂芬"});
+
+
+    //发送--发送到网络//========================
+    connect(v_friends_list,&wid_friends_list::fa_send_news,this,
+            [=](en_info en,long long account,string txt){
+        if(en == en_info::e_send_txt)
         {
-            emit fa_show_register (QString::number(account),
-                                   QString::fromStdString(passwd));
+            vlogf("en_info" vv(account) vv(txt));
         }
-        vlogw("func_register_back: " vv(account) vv(passwd) vv(ok));
-    };
-
-    connect(this,&wid_manage::fa_show_register,
-            this,[=](QString account,QString passwd){
-        vlogf("fa_show_register: " vv(account.toStdString()) vv(passwd.toStdString()));
-        v_register->close_client();
     });
 
-    connect(v_login,&wid_login::fa_login,
-            this,[=](QString account,QString passwd){
+    //发送--发送到网络//========================
+    connect(v_login,&wid_login::fa_login,this,[=](long long account,string passwd){
+        vlogf("en_info" vv(account) vv(passwd));
 
-        v_friends_list->show();
-//        sp_net->open_client(account.toLongLong(),passwd.toStdString());
-    });
-
-    connect(v_login,&wid_login::fa_register_passwd,
-            this,[=](QString passwd){
-        if(v_register->is_connect())
-            { v_register->ask_register(passwd.toStdString()); }
-        vlogf("fa_register_passwd: " vv(v_register->is_connect()));
-    });
-
-    connect(sp_net.get(),&net_connect::fa_login_status,this,[=](bool ok){
-        vlogf("fa_login_status: " vv(ok));
-        if(ok)
-        {
+        QTimer::singleShot(1000,this,[=](){
             v_friends_list->move(v_login->pos());
             v_friends_list->show();
-            v_login->hide();
-        }
+            v_friends_list->set_friends(vec);
+            v_login->close();
+        });
     });
 
+    //网络返回--注册//========================
+    connect(v_login,&wid_login::fa_register,this,[=](string passwd){
+        vlogf(vv(passwd));
+        QTimer::singleShot(1000,this,[=](){
+            v_login->show_register_back(true,1234567890);
+        });
+    });
 }
 
 wid_manage::~wid_manage()
 {
     delete v_login;
     delete v_friends_list;
-    delete v_register;
+}
+
+bool wid_manage::init_net()
+{
+
+
+    return true;
 }

@@ -1,38 +1,60 @@
 #include "widget.h"
-#include "ui_widget.h"
+//#include "ui_widget.h"
 
 
-#include "wid_login.h"
-#include "wid_change.h"
+//#include "wid_login.h"
+//#include "wid_change.h"
 
-#include "wid_edit.h"
+//#include "wid_edit.h"
 
-#include "wid_register.h"
+//#include "wid_register.h"
 
-#include "wid_friends_list.h"
-#include "wid_manage.h"
+//#include "wid_friends_list.h"
+//#include "wid_manage.h"
 
-#include "tcp_socket.h"
+////#include "tcp_socket.h"
 
-#include "wid_talk.h"
+//#include "wid_talk.h"
 #include "wid_register_back.h"
 
-#include "qt_area_slide.h"
+//#include "qt_area_slide.h"
 
-#include "wid_slide_list.h"
+//#include "wid_slide_list.h"
 
-#include "vlog.h"
+//#include "vlog.h"
+
+#include "wid_dialog.h"
+#include <QDialog>
+//#include <QDebug>
+//#define out qDebug()
+
+#include "vts_vlog.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
 {
-    wid_register_back *w = new wid_register_back;
-    w->set_status(true,QString::number(1234567890));
-    w->show();
 
-    wid_register_back *w2 = new wid_register_back;
-    w2->set_status(false);
-    w2->show();
+//    QDialog ji;
+//    ji.exec()
+//    wid_dialog ji;
+//    ji.exec();
+//    out<< ji.get_status();
+
+    int hu = 100;
+    vlogf("123" vv(hu));
+    vlogd("123" vv(hu));
+    vlogw("123" vv(hu));
+    vloge("123" vv(hu));
+
+//    ji.e
+
+//    wid_register_back *w = new wid_register_back;
+//    w->set_status(true,QString::number(1234567890));
+//    w->show();
+
+//    wid_register_back *w2 = new wid_register_back;
+//    w2->set_status(false);
+//    w2->show();
 
 
 

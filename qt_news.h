@@ -6,6 +6,8 @@
 #include <QDateTime>
 #include <QLabel>
 
+#include "vts_vlog.h"
+
 //!
 //! 功能：提供一个抽象的统一接口，可以自定义显示内容
 //! 子类需要返回一个虚拟记录消息，用于写入历史文件
@@ -19,6 +21,7 @@ class qt_news : public QWidget
 {
     Q_OBJECT
 public:
+
     void set_size(int wide,int high);
     void set_self(bool self);
     void set_news_time(QString time);
@@ -26,7 +29,7 @@ public:
     QWidget* get_news_wid();
 
     virtual QString to_string_info() = 0;
-
+    virtual ~qt_news();//提供虚继承析构函数,否着会导致内存泄露
 signals:
 
 protected:
@@ -56,6 +59,7 @@ class qt_news_word : public qt_news
     Q_OBJECT
 public:
     explicit qt_news_word(QString word,bool self = true);//通用接口
+    ~qt_news_word();
     QString to_string_info() override;//返回的历史记录
 
 signals:

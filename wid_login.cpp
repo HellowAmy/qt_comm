@@ -1,5 +1,9 @@
 ﻿#include "wid_login.h"
 
+
+#include <QDebug>
+#define out qDebug()
+
 wid_login::wid_login(QWidget *parent)
     : wid_change{parent}
 {
@@ -7,6 +11,10 @@ wid_login::wid_login(QWidget *parent)
     this->open_translucent();
     this->open_lessframe();
     this->open_backdrop(":/pic/pic_bake_login.png");
+
+    //显示成功注册的账号
+    v_register_back = new wid_register_back;
+    v_register_back->hide();
 
     //注册窗口
     v_reginster = new wid_register;
@@ -27,8 +35,8 @@ wid_login::wid_login(QWidget *parent)
     butt_login->set_txt("登录");
 
     //注册位置
-    butt_new = new qt_button(this);
-    butt_new->set_txt("注册账号");
+    butt_register = new qt_button(this);
+    butt_register->set_txt("注册账号");
 
     //关闭位置
     butt_close = new qt_button(this);
@@ -39,7 +47,7 @@ wid_login::wid_login(QWidget *parent)
     vec_move->add_wid(edit_account);
     vec_move->add_wid(edit_passwd);
     vec_move->add_wid(butt_login);
-    vec_move->add_wid(butt_new);
+    vec_move->add_wid(butt_register);
     vec_move->add_wid(butt_close);
     vec_move->set_vert();
 
@@ -51,22 +59,44 @@ wid_login::wid_login(QWidget *parent)
     });
 
     //注册密码
-    connect(v_reginster,&wid_register::fa_register_passwd,
-            this,&wid_login::fa_register_passwd);
+    connect(v_reginster,&wid_register::fa_register,
+            this,[=](QString passwd){
+        emit fa_register(passwd.toStdString());
+    });
 
+    //点击登陆
     connect(butt_login,&qt_button::fa_press,this,[=](){
-        emit fa_login(edit_account->get_txt(),edit_passwd->get_txt());
+        emit fa_login(edit_account->get_txt().toLongLong(),edit_passwd->get_txt().toStdString());
     });
 
     //进入注册界面
-    connect(butt_new,&qt_button::fa_press,this,[=](){
+    connect(butt_register,&qt_button::fa_press,this,[=](){
         v_reginster->move(this->pos());
         v_reginster->show();
-        this->hide();
+        this->close();
     });
 
-    //关闭窗口
-    connect(butt_close,&qt_button::fa_press,this,&QWidget::close);
+    //关闭反馈界面
+    connect(v_register_back,&wid_register_back::fa_back,this,[=](){
+//        this->fa_back();
+        this->move(v_register_back->pos());
+        this->show();
+        v_register_back->close();
+
+//        butt_close->fa_press();
+//        v_register_back->close();
+    });
+
+    connect(butt_close,&qt_button::fa_press,this,&QWidget::close);//关闭窗口
+
+}
+
+void wid_login::show_register_back(bool is_success, long long account)
+{
+    v_reginster->close();
+    v_register_back->move(v_reginster->pos());
+    v_register_back->set_status(is_success,QString::number(account));
+    v_register_back->show();
 }
 
 wid_login::~wid_login()

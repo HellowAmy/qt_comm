@@ -1,10 +1,10 @@
 ﻿#include "widget.h"
 #include "wid_manage.h"
-#include "lib/vts/vts.h"
+//#include "lib/vts/vts.h"
 
 #include <QApplication>
 
-using vts::vlog;
+//using vts::vlog;
 
 //! =====各类功能=====
 //! 从wid_manage开始运行
@@ -54,7 +54,7 @@ using vts::vlog;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    vinit_c(vlog::e_info);
+//    vinit_c(vlog::e_info);
 
 #if 1
     wid_manage k;

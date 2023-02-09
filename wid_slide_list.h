@@ -8,6 +8,11 @@
 #include "qt_area_slide.h"
 #include "qt_news.h"
 
+//!
+//! 功能:可添加窗口的滑动界面,用于聊天界面添加qt_news窗口到显示界面
+//! 1.提供消息历史记录
+//! 2.qt_news的自动管理,会释放qt_news的指针
+//!
 class wid_slide_list : public QWidget
 {
     Q_OBJECT

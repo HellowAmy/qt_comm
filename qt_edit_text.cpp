@@ -19,9 +19,7 @@ qt_edit_text::qt_edit_text(QWidget *parent)
 void qt_edit_text::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == 16777220)//枚举失效--手动匹配:Qt::Key_Enter
-    {
-        emit fa_press_enter();
-    }
+    { emit fa_press_enter(); }
     else QTextEdit::keyPressEvent(event);
 }
 

@@ -6,6 +6,10 @@
 #include <QLabel>
 #include <QScrollArea>
 
+//!
+//! 功能:创建一个可滑动窗口,用于显示好友列表的管理
+//!     1.wid_slide为控制指针不释放资源,该类需要外部的QWidget才能显示,不提供默认显示
+//!
 class qt_area_slide : public QScrollArea
 {
     Q_OBJECT

@@ -4,11 +4,15 @@
 #include <QWidget>
 #include <QLabel>
 
+#include "wid_dialog.h"
 #include "wid_change.h"
 #include "wid_edit.h"
 #include "qt_button.h"
 #include "qt_move_it.h"
 
+//!
+//! 功能:提供一个账号注册界面
+//!
 class wid_register : public wid_change
 {
     Q_OBJECT
@@ -17,7 +21,7 @@ public:
 
 signals:
     emit void fa_back();
-    emit void fa_register_passwd(QString passwd);
+    emit void fa_register(QString passwd);
 
 protected:
     wid_edit *edit_passwd;

@@ -80,9 +80,15 @@ wid_talk::wid_talk(QWidget *parent)
     });
 }
 
-void wid_talk::set_title(QString str)
+void wid_talk::set_info(long long account, QString title)
 {
-    lab_title->setText(str);
+    v_account = account;
+    lab_title->setText(title);
+}
+
+long long wid_talk::get_account()
+{
+    return v_account;
 }
 
 void wid_talk::paintEvent(QPaintEvent *e)
@@ -110,6 +116,7 @@ void wid_talk::send_word()
     QString word = edit_in->toPlainText();
     if(word.isEmpty() == false)
     {
+        emit fa_send_news(en_info::e_send_txt,v_account,word);
         wid_show->add_widget(new qt_news_word(word));
         edit_in->setText("");
     }

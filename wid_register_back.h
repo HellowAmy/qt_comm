@@ -11,6 +11,9 @@
 #include "qt_move_it.h"
 #include "lab_tips.h"
 
+//!
+//! 功能:提供注册返回时的提示信息
+//!
 class wid_register_back : public wid_change
 {
     Q_OBJECT

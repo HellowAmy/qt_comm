@@ -33,7 +33,9 @@ wid_register::wid_register(QWidget *parent)
 
     //发送申请密码
     connect(butt_transmit,&qt_button::fa_press,this,[=](){ 
-        emit fa_register_passwd(edit_passwd->get_txt());
+        if(edit_passwd_ok->get_txt() == edit_passwd->get_txt())
+        { emit fa_register(edit_passwd->get_txt()); }
+        else { wid_dialog("输入的密码不一致").exec(); }
     });
 
     //点击返回按钮

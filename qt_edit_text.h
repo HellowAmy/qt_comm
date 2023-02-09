@@ -6,6 +6,10 @@
 #include <QPainter>
 #include <QKeyEvent>
 
+
+//!
+//! 功能:提高一个QTextEdit相识的同风格控件类
+//!
 class qt_edit_text : public QTextEdit
 {
     Q_OBJECT

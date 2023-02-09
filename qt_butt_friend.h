@@ -9,7 +9,9 @@
 #include <QPen>
 
 #include "qt_button.h"
-
+//!
+//! \brief The qt_butt_friend class
+//! 功能:好友列表
 class qt_butt_friend : public qt_button
 {
     Q_OBJECT

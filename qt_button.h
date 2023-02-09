@@ -9,6 +9,9 @@
 #include <QPen>
 #include <QEvent>
 
+//!
+//! 功能:提供一个圆滑的按钮
+//!
 class qt_button : public QPushButton
 {
     Q_OBJECT

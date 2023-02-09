@@ -3,23 +3,23 @@
 
 #include <QObject>
 
-#include "net_connect.h"
-#include "ms_web_client.h"
+//#include "net_connect.h"
+//#include "ms_web_client.h"
 #include "wid_login.h"
 #include "wid_friends_list.h"
 
-#include <memory>
 
-using std::shared_ptr;
-using std::make_shared;
-using vts::vlog;
 
+//!
+//! 功能:提供管理类,分别管理: 登陆界面,注册界面,好友列表,网络通信
+//!
 class wid_manage : public QObject
 {
     Q_OBJECT
 public:
     explicit wid_manage(QWidget *parent = nullptr);
     ~wid_manage();
+    bool init_net();
 
 signals:
     emit void fa_show_register(QString account,QString passwd);
@@ -27,8 +27,8 @@ signals:
 protected:
     wid_login *v_login;
     wid_friends_list *v_friends_list;
-    ms_web_client *v_register;
-    shared_ptr<net_connect> sp_net;
+//    ms_web_client *v_register;
+//    shared_ptr<net_connect> sp_net;
 
 };
 
