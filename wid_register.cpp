@@ -39,10 +39,22 @@ wid_register::wid_register(QWidget *parent)
     //发送申请密码
     connect(butt_transmit,&qt_button::fa_press,this,[=](){ 
         if(edit_passwd_ok->get_txt() == edit_passwd->get_txt())
-        { emit fa_register(edit_name->get_txt(),edit_passwd->get_txt()); }
+        {
+            if(is_valid(edit_passwd_ok->get_txt()) == false)
+                wid_dialog("限制:不能输入'#',或者密码过长").exec();
+            else emit fa_register(edit_name->get_txt(),edit_passwd->get_txt());
+        }
         else { wid_dialog("输入的密码不一致").exec(); }
     });
 
     //点击返回按钮
     connect(butt_back,&qt_button::fa_press,this,&wid_register::fa_back);
+}
+
+bool wid_register::is_valid(QString str)
+{
+    if(str.size() > 60) return false;
+    for(const auto &a:str)
+    { if(a == '#') return false; }
+    return true;
 }

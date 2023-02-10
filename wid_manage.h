@@ -8,10 +8,9 @@
 #include "wid_login.h"
 #include "wid_friends_list.h"
 
-
-
 //!
 //! 功能:提供管理类,分别管理: 登陆界面,注册界面,好友列表,网络通信
+//!     1.所有的网络反馈到界面信息都会从该类下分发
 //!
 class wid_manage : public QObject
 {

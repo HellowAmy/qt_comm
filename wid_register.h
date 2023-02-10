@@ -29,6 +29,10 @@ protected:
     wid_edit *edit_passwd_ok;
     qt_button *butt_transmit;
     qt_button *butt_back;
+
+    //限制:不能输入"#"符号,或者密码过长(超过60位)
+    bool is_valid(QString str);
+
 };
 
 #endif // WID_REGISTER_H

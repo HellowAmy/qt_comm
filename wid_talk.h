@@ -6,6 +6,10 @@
 #include <QPalette>
 #include <QLabel>
 #include <QThread>
+#include <QDropEvent>
+#include <QMimeData>
+#include <QList>
+#include <QFileDialog>
 
 #include "wid_change.h"
 #include "qt_edit_text.h"
@@ -16,6 +20,7 @@
 enum en_info
 {
     e_send_txt,
+    e_send_pic,
     e_send_file
 };
 
@@ -34,6 +39,8 @@ public:
     void set_info(long long account,QString title);
     void into_news(en_info en,QString info);
     long long get_account();
+
+    void set_drag(bool drag = true);//开启拖动
 
 signals:
     //发送信息，文字或者文件
@@ -54,8 +61,21 @@ protected:
     QPoint pos_lien_down;
     void paintEvent(QPaintEvent *event) override;
 
-    void send_word();//发送到显示区域
-    void send_pic();//发送到显示区域
+    //发送到显示区域(同时发送到网络)
+    void send_word();//发送文字
+    void send_pic(QList<QString> list);//发送图片
+    void send_file(QString filename);//发送文件
+
+    //通过网络回传的内容
+    void show_word(QString txt);//显示文字
+    void show_pic(QString file_path);//显示图片
+    void show_file(QString filename);//发送文件
+
+    //
+    bool is_drag = true;
+    virtual void dragEnterEvent(QDragEnterEvent *e) override;
+    virtual void dropEvent(QDropEvent *e) override;
+
 };
 
 #endif // WID_TALK_H

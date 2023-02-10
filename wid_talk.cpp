@@ -10,6 +10,8 @@ wid_talk::wid_talk(QWidget *parent)
     this->open_backdrop(":/pic/pic_bake_talk.png");
     this->show();
 
+    set_drag();
+
     //== 标题 ==
     lab_title = new QLabel(this);
     lab_title->show();
@@ -58,7 +60,18 @@ wid_talk::wid_talk(QWidget *parent)
     //消息滑动窗口
     wid_show = new wid_slide_list(this);
     wid_show->move(10,40);
-    wid_show->set_size(this->width() - 10*2,350);
+    wid_show->set_size(this->width() - 10*2,390);
+
+//    //
+//    QLabel *uw=new QLabel(wid_show);
+//    uw->resize(wid_show->size());
+//    uw->setText("QFrame::Box: wid_slide_list");
+//    uw->setFrameShape(QFrame::Box);
+//    uw->show();
+//    vlogf("QFrame::Box: wid_slide_list");
+
+//    qout<<wid_show->size()<<"|"<<wid_show->get_show_wid()->size();
+
 //    wid_show->set_size()
 
     //设置窗口背景透明
@@ -76,7 +89,15 @@ wid_talk::wid_talk(QWidget *parent)
     });
 
     //发送信号--回车
-    connect(butt_file,&qt_button::fa_press,this,&wid_talk::send_pic);
+    connect(butt_file,&qt_button::fa_press,this,[=](){
+        QStringList list = QFileDialog::getOpenFileNames(this,"Send Files","/home/red/test/");
+        for(auto a:list)
+        {
+            send_file(a);
+//            qout<<a;
+        }
+
+    });
 
     //隐藏窗口
     connect(butt_hide,&qt_button::fa_press,this,[=](){
@@ -95,14 +116,22 @@ long long wid_talk::get_account()
     return v_account;
 }
 
+void wid_talk::set_drag(bool drag)
+{
+    is_drag = drag;
+    this->setAcceptDrops(drag);
+}
+
 void wid_talk::into_news(en_info en, QString info)
 {
+    this->show();
     if(en == en_info::e_send_txt)
-    { wid_show->add_widget(new qt_news_word(info,false)); this->show(); }
+    { show_word(info); }
+    else if (en == en_info::e_send_pic)
+    { show_pic(info); }
     else if (en == en_info::e_send_file)
-    {
-        vlogf("e_send_file");
-    }
+    { show_file(info); }
+    else { vlogw("into_news not find"); }
 }
 
 void wid_talk::paintEvent(QPaintEvent *e)
@@ -126,29 +155,81 @@ void wid_talk::paintEvent(QPaintEvent *e)
 
 void wid_talk::send_word()
 {
-
     //发送信息并清屏
     QString word = edit_in->toPlainText();
     if(word.isEmpty() == false)
     {
+        wid_show->add_widget(new qt_news_word(wid_show->get_show_wid(),word));
         emit fa_send_news(en_info::e_send_txt,v_account,word);
-        wid_show->add_widget(new qt_news_word(word));
         edit_in->setText("");
     }
 }
 
-void wid_talk::send_pic()
+void wid_talk::send_file(QString filename)
 {
-    wid_show->get_show_wid();
-//    emit fa_send_news(en_info::e_send_txt,v_account,word);
-    wid_show->add_widget(new qt_news_pic(wid_show->get_show_wid(),"1241",false));
+    wid_show->add_widget(new qt_news_file(wid_show->get_show_wid(),filename));
+    emit fa_send_news(en_info::e_send_file,v_account,filename);
+    vlogf("send_file");
+}
+
+void wid_talk::send_pic(QList<QString> list)
+{
+    QPixmap pix;
+    for(auto it = list.begin();it != list.end();it++)
+    {
+        const QString &file_path = *it;
+        if(pix.load(file_path))
+        {
+            wid_show->add_widget(new qt_news_pic(wid_show->get_show_wid(),pix,file_path));
+            emit fa_send_news(en_info::e_send_pic,v_account,file_path);
+        }
+        else vlogw("load failed:" vv(file_path.toStdString()));
+    }
     vlogf("send_pic");
+}
 
-//    //发送信息并清屏
-//    QString word = edit_in->toPlainText();
-//    if(word.isEmpty() == false)
-//    {
+void wid_talk::show_word(QString txt)
+{
+    wid_show->add_widget(new qt_news_word(wid_show->get_show_wid(),txt,false));
+}
 
-//        edit_in->setText("");
-//    }
+void wid_talk::show_pic(QString file_path)
+{
+    QPixmap pix(file_path);
+    if(pix.isNull() == false)
+    { wid_show->add_widget(new qt_news_pic(wid_show->get_show_wid(),pix,file_path,false)); }
+    else vlogw("show_pic err");
+}
+
+void wid_talk::show_file(QString filename)
+{
+    wid_show->add_widget(new qt_news_file(wid_show->get_show_wid(),filename,false));
+    vlogw("show_file");
+}
+
+void wid_talk::dragEnterEvent(QDragEnterEvent *e)
+{
+    if(is_drag)
+    {
+        if(e->mimeData()->hasUrls())//判断数据类型
+        { e->acceptProposedAction(); }
+    }
+}
+
+void wid_talk::dropEvent(QDropEvent *e)
+{
+    if(e->mimeData()->hasUrls())//处理期望数据类型
+    {
+        QList<QString> list_str;
+        QList<QUrl> list = e->mimeData()->urls();//获取数据并保存到链表中
+        for(const auto &a:list)
+        { list_str.append(a.toLocalFile()); }
+
+        send_pic(list_str);
+        vlogf(vv(list.size()));
+//        for(int i = 0; i < list.count(); i++)
+//        {
+//            qDebug() << list[i].toLocalFile();
+//        }
+    }
 }

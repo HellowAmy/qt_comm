@@ -3,7 +3,6 @@
 wid_slide_list::wid_slide_list(QWidget *parent) : QWidget(parent)
 {
     area = new qt_area_slide(this);
-    area->set_size_wid(this->width(),this->height());
     area->less_frame();
     this->show();
 }
@@ -18,23 +17,17 @@ wid_slide_list::~wid_slide_list()
 
 void wid_slide_list::add_widget(qt_news *wid)
 {
-    //设置并获取滑动窗口
-    area->set_size_wid
+    //设置最底部滑动窗口大小
+    area->get_wid_slide()->resize
             (this->width(),v_space + pos_current + wid->height());
 
     //发送信息时列表回滚触底 QScrollArea
     area->verticalScrollBar()->setValue
             (area->verticalScrollBar()->maximum());
 
-    //将控件与滑动窗口绑定
-    QWidget *wid_slide = area->get_wid_slide();
-    wid->setParent(wid_slide);
-    wid->move(0,v_space + pos_current);
-    wid->resize(wid_slide->width(),wid->height());
-    wid->show();
-
     vec_news.push_back(wid);//加入消息列表
     vec_history.push_back(wid->get_info());//加入历史记录容器
+    wid->move(0,v_space + pos_current);//放置加入的窗口到滑动界面
     pos_current += wid->height() + v_space;//记录当前窗口的位置
 
     //历史容器信息
@@ -47,9 +40,9 @@ void wid_slide_list::add_widget(qt_news *wid)
 
 void wid_slide_list::set_size(int wide, int high)
 {
+    area->resize(wide,high);
+    area->get_wid_slide()->resize(wide,high);
     this->resize(wide,high);
-    area->set_size_area(wide+20,high);
-    area->set_size_wid(wide-50,high);
 }
 
 void wid_slide_list::set_space(int space)

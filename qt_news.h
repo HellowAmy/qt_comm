@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QDateTime>
 #include <QLabel>
+#include <QPixmap>
 
 #include "vts_vlog.h"
 
@@ -28,7 +29,7 @@ signals:
 protected:
     explicit qt_news(QWidget *parent = nullptr);
 
-    QWidget* init_news(bool self,QString time,QString type,QString content);
+    QWidget* init_news(QWidget *parent,bool self,QString time,QString type,QString content);
     QString str_info;
 
     QWidget *wid_news;
@@ -57,7 +58,7 @@ class qt_news_word : public qt_news
 {
     Q_OBJECT
 public:
-    explicit qt_news_word(QString word,bool self = true);//通用接口
+    explicit qt_news_word(QWidget *parent,QString word,bool self = true);//通用接口
 
 signals:
 
@@ -73,7 +74,20 @@ class qt_news_pic : public qt_news
 {
     Q_OBJECT
 public:
-    explicit qt_news_pic(QWidget *parent,QString path,bool self = true);//通用接口
+    explicit qt_news_pic(QWidget *parent,const QPixmap &pix,QString path,bool self = true);//通用接口
+
+signals:
+
+protected:
+
+};
+
+//显示发送文件
+class qt_news_file : public qt_news
+{
+    Q_OBJECT
+public:
+    explicit qt_news_file(QWidget *parent,QString filename,bool self = true);//通用接口
 
 signals:
 

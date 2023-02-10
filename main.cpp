@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 //    vinit_c(vlog::e_info);
 
-#if 0
+#if 1
     wid_manage k;
 #else
     Widget w;

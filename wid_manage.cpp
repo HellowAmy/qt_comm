@@ -41,8 +41,27 @@ wid_manage::wid_manage(QWidget *parent)
 
 
 
-            QTimer::singleShot(1000,this,[=](){
+            QTimer::singleShot(500,this,[=](){
                 v_friends_list->into_news(en_info::e_send_txt,account,"你好吗？");
+            });
+        }
+        else if(en == en_info::e_send_pic)
+        {
+            vlogf("en_info" vv(account) vv(txt));
+
+
+            QTimer::singleShot(500,this,[=](){
+                v_friends_list->into_news(en_info::e_send_pic,account,QString::fromStdString(txt));
+            });
+        }
+        else if(en == en_info::e_send_file)
+        {
+
+            vlogf("en_info" vv(account) vv(txt));
+
+
+            QTimer::singleShot(500,this,[=](){
+                v_friends_list->into_news(en_info::e_send_file,account,QString::fromStdString(txt));
             });
         }
     });
@@ -57,7 +76,7 @@ wid_manage::wid_manage(QWidget *parent)
 
         //登陆成功：隐藏登陆窗口，显示好友列表
         //登陆失败：失败提示，返回到登陆窗口
-        QTimer::singleShot(1000,this,[=](){
+        QTimer::singleShot(500,this,[=](){
             v_friends_list->move(v_login->pos());
             v_friends_list->show();
             v_friends_list->into_friends(map);
@@ -72,7 +91,7 @@ wid_manage::wid_manage(QWidget *parent)
         vlogf(vv(name));
 
 
-        QTimer::singleShot(1000,this,[=](){
+        QTimer::singleShot(500,this,[=](){
             v_login->show_register_back(true,1234567890);
         });
     });

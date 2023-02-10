@@ -11,18 +11,21 @@ qt_news::qt_news(QWidget *parent) : QWidget(parent)
     this->hide();//如果打开显示会有黑窗口闪屏
 
     wid_news = new QWidget(this);
-    wid_news->move(v_space,v_begin);
+    wid_news->move(0,v_begin);//v_space
     wid_news->show();
 
     v_font = QFont("微软雅黑",14);
 }
 
-QWidget *qt_news::init_news(bool self, QString time, QString type, QString content)
+QWidget *qt_news::init_news(QWidget *parent,bool self, QString time, QString type, QString content)
 {
     is_self = self;
     str_news_time = time;
     str_info = to_info(type,self,str_news_time,content);
-//    wid_news->resize(wid_news->size()-QSize(70,0));
+    wid_news->resize(parent->size());
+    this->resize(parent->size());
+    this->setParent(parent);
+    this->show();
     return wid_news;
 }
 
@@ -42,8 +45,8 @@ QString qt_news::get_time()
 
 void qt_news::set_wid_high(QWidget *wid,int high)
 {
-    wid->resize(wid->width(),high);
     this->resize(this->width(),high + 45);
+    wid->resize(wid->width(),high);
 }
 
 QString qt_news::to_info
@@ -62,17 +65,17 @@ void qt_news::draw_time(QPainter *show)
     show->setFont(v_font);
 
     //坐标定点
-    QPoint pos_up(v_space,v_space);
+    QPoint pos_up(0,v_space);
     QPoint pos_up_center(this->width()/2,v_space);
-    QPoint pos_down(v_space,v_space+v_mini);
+    QPoint pos_down(0,v_space+v_mini);
     QPoint pos_down_center(this->width()/2,v_space+v_mini);
     QRect rect_time(pos_up,pos_down_center);
 
     //右侧显示
     if(is_self)
     {
-        pos_up = QPoint(this->width()-v_space,v_space);
-        pos_down = QPoint(this->width()-v_space,v_space+v_mini);
+        pos_up = QPoint(this->width(),v_space);
+        pos_down = QPoint(this->width(),v_space+v_mini);
         rect_time = QRect(pos_up_center,QSize(this->width()/2,v_mini));
     }
 
@@ -87,11 +90,10 @@ void qt_news::draw_time(QPainter *show)
     //===== 绘制时间文本和线框 =====
 }
 
-qt_news_word::qt_news_word(QString word,bool self)
+qt_news_word::qt_news_word(QWidget *parent,QString word,bool self)
 {
     //获取容器列表的控制权
-    QWidget *wid_show = init_news(self,get_time(),"WORD",word);
-    wid_show->resize(this->size());
+    QWidget *wid_show = init_news(parent,self,get_time(),"WORD",word);
 
     //设置显示内容
     QLabel *lab = new QLabel(wid_show);
@@ -99,16 +101,8 @@ qt_news_word::qt_news_word(QString word,bool self)
     lab->setFrameShape(QFrame::Box);
 
     //对齐双方位置
-    lab->resize(this->width() / 2 ,v_mini);
-    qout<<lab->pos();
-    qout<<this->pos();
-    qout<<wid_show->pos();
-
-    qout<<lab->size();
-    qout<<this->size();
-    qout<<wid_show->size();
-    qout<<lab->width()-70<<"|"<<lab->width()-lab->width()/4;
-    if(self) lab->move(lab->width()-lab->width()/4 +10,0);
+    lab->resize(wid_show->width() / 2 ,v_mini);
+    if(self) lab->move(wid_show->width() - lab->width(),0);
 
     //计算文字长度
     QString word_new;
@@ -116,16 +110,14 @@ qt_news_word::qt_news_word(QString word,bool self)
 
     //不同角色的显示对齐
     if(self == false)
-    {
-        lab->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
-    }
+    { lab->setAlignment(Qt::AlignLeft|Qt::AlignVCenter); }
     else
     {
         if(count > 1) lab->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
         else lab->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
     }
 
-    //重设界面大小匹配文字
+    //重设界面大小匹配文字(承载界面比显示控件大,需要同时设置才能正常显示)
     set_wid_high(lab,count * v_mini);
 
     //修改字体颜色
@@ -134,9 +126,7 @@ qt_news_word::qt_news_word(QString word,bool self)
     else pe.setColor(QPalette::WindowText,0x95d59f);
     lab->setPalette(pe);
     lab->setFont(v_font);
-
     lab->setText(word_new);
-    QString str_self;
 
 }
 
@@ -178,50 +168,55 @@ int qt_news_word::line_wrap_max
     return count;
 }
 
+
+
+
 #include <QPushButton>
 
-//qt_news_pic::qt_news_pic(QString path, bool self)
-//{
-//    //获取容器列表的控制权
-//    QWidget *wid_show = init_news(self,get_time(),"SPIC",path);
-//    wid_show->resize(this->size());
-
-//    QLabel *hu2 = new QLabel(wid_show);
-//    hu2->setFrameShape(QFrame::Box);
-//    hu2->resize((wid_show->width()-70),300);
-//    set_wid_high(hu2,300);
-
-//    QPixmap pix("/home/red/test/44.jpeg");
-//    if(pix.isNull() == false)
-//    {
-//        pix = pix.scaled(wid_show->width()-70,1920,Qt::KeepAspectRatio);
-//        hu2->setPixmap(pix);
-//    }
-
-
-////    QPushButton *hu =new QPushButton(wid_show);
-////    hu->show();
-
-
-//}
-
-
-qt_news_pic::qt_news_pic(QWidget *parent, QString path, bool self)
+qt_news_pic::qt_news_pic(QWidget *parent, const QPixmap &pix, QString path, bool self)
 {
-    this->setParent(parent);
+    if(pix.isNull()) return;
+
     //获取容器列表的控制权
-    QWidget *wid_show = init_news(self,get_time(),"SPIC",path);
-    wid_show->resize(this->size());
+    QWidget *wid_show = init_news(parent,self,get_time(),"SPIC",path);
 
-    QLabel *hu2 = new QLabel(wid_show);
-    hu2->setFrameShape(QFrame::Box);
-    hu2->resize(parent->size());
-    set_wid_high(hu2,300);
+    //设置缩放,限制到最合适的最大宽高比
+    QPixmap temp = pix.scaled(parent->width()/2+parent->width()/4,350,Qt::KeepAspectRatio);
 
-    QPixmap pix("/home/red/test/44.jpeg");
-    if(pix.isNull() == false)
+    //显示图片
+    QLabel *lab_pic = new QLabel(wid_show);
+    lab_pic->show();
+    lab_pic->setPixmap(temp);
+    if(self) lab_pic->move(wid_show->width()-temp.width(),0);
+
+    //设置显示窗口大小
+    lab_pic->resize(temp.width(),temp.height());
+    wid_show->resize(wid_show->width(),temp.height());
+    set_wid_high(lab_pic,temp.height());
+}
+
+qt_news_file::qt_news_file(QWidget *parent, QString filename, bool self)
+{
+    //获取容器列表的控制权
+    QWidget *wid_show = init_news(parent,self,get_time(),"FILE",filename);
+
+    //显示图片
+    QLabel *lab_box = new QLabel(wid_show);
+    lab_box->show();
+    lab_box->resize(wid_show->width(),40);
+    lab_box->setAlignment(Qt::AlignCenter);
+    lab_box->setFont(QFont("",16));
+
+    //区分不同发送者
+    if(self)
     {
-        pix = pix.scaled(wid_show->width()-70,1920,Qt::KeepAspectRatio);
-        hu2->setPixmap(pix);
+        lab_box->setAlignment(Qt::AlignRight);
+        lab_box->setText("<<< <<< <<< [ "+filename+" ]");
     }
+    else
+    {
+        lab_box->setAlignment(Qt::AlignLeft);
+        lab_box->setText("[ "+filename+" ] >>> >>> >>>");
+    }
+    set_wid_high(lab_box,40);
 }
