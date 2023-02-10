@@ -26,7 +26,7 @@ public:
 
 signals:
     emit void fa_login(long long account,string passwd);
-    emit void fa_register(string passwd);
+    emit void fa_register(string name,string passwd);
     emit void fa_back();
 
 protected:

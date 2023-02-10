@@ -1,8 +1,5 @@
 #include "wid_talk.h"
 
-#include <QDebug>
-#define out qDebug()
-
 wid_talk::wid_talk(QWidget *parent)
     : wid_change{parent}
 {
@@ -13,7 +10,6 @@ wid_talk::wid_talk(QWidget *parent)
     this->open_backdrop(":/pic/pic_bake_talk.png");
     this->show();
 
-
     //== 标题 ==
     lab_title = new QLabel(this);
     lab_title->show();
@@ -23,11 +19,11 @@ wid_talk::wid_talk(QWidget *parent)
     lab_title->setFont(QFont("微软雅黑",16));
     lab_title->setAlignment(Qt::AlignCenter);
     lab_title->setFrameShape(QFrame::Box);
+    lab_title->setLineWidth(3);
     QPalette pe;
     pe.setColor(QPalette::WindowText,0xe96366);
     lab_title->setPalette(pe);
     //== 标题 ==
-
 
     //输入框初始化
     int space = 60;//输入框与底部间隔
@@ -42,23 +38,28 @@ wid_talk::wid_talk(QWidget *parent)
 
     //按钮——发送到服务器
     butt_transmit = new qt_button(this);
-    butt_transmit->move(this->width() - butt_transmit->width()*2,
+    butt_transmit->move(this->width() - butt_transmit->width()*2 + 30,
                         this->height() - butt_transmit->height() - 5);
     butt_transmit->set_txt("发送");
     butt_transmit->show();
 
-
     //按钮——隐藏窗口
     butt_hide = new qt_button(this);
-    butt_hide->move(20,this->height() - butt_hide->height() - 5);
+    butt_hide->move(50,this->height() - butt_hide->height() - 5);
     butt_hide->set_txt("关闭");
     butt_hide->show();
 
+    //按钮——打开文件
+    butt_file = new qt_button(this);
+    butt_file->move(butt_hide->pos()+QPoint(butt_hide->width(),0));
+    butt_file->set_txt("文件");
+    butt_file->show();
 
     //消息滑动窗口
     wid_show = new wid_slide_list(this);
-    wid_show->move(60,50);
-    wid_show->set_size(this->width() - 60*2,350);
+    wid_show->move(10,40);
+    wid_show->set_size(this->width() - 10*2,350);
+//    wid_show->set_size()
 
     //设置窗口背景透明
     wid_show->setPalette
@@ -73,6 +74,9 @@ wid_talk::wid_talk(QWidget *parent)
     connect(edit_in,&qt_edit_text::fa_press_enter,this,[=](){
         send_word();
     });
+
+    //发送信号--回车
+    connect(butt_file,&qt_button::fa_press,this,&wid_talk::send_pic);
 
     //隐藏窗口
     connect(butt_hide,&qt_button::fa_press,this,[=](){
@@ -89,6 +93,16 @@ void wid_talk::set_info(long long account, QString title)
 long long wid_talk::get_account()
 {
     return v_account;
+}
+
+void wid_talk::into_news(en_info en, QString info)
+{
+    if(en == en_info::e_send_txt)
+    { wid_show->add_widget(new qt_news_word(info,false)); this->show(); }
+    else if (en == en_info::e_send_file)
+    {
+        vlogf("e_send_file");
+    }
 }
 
 void wid_talk::paintEvent(QPaintEvent *e)
@@ -112,6 +126,7 @@ void wid_talk::paintEvent(QPaintEvent *e)
 
 void wid_talk::send_word()
 {
+
     //发送信息并清屏
     QString word = edit_in->toPlainText();
     if(word.isEmpty() == false)
@@ -120,11 +135,20 @@ void wid_talk::send_word()
         wid_show->add_widget(new qt_news_word(word));
         edit_in->setText("");
     }
+}
 
-    //==test history ret
-//    QVector<QString> vec = wid_show->get_history();
-//    for(auto a:vec)
+void wid_talk::send_pic()
+{
+    wid_show->get_show_wid();
+//    emit fa_send_news(en_info::e_send_txt,v_account,word);
+    wid_show->add_widget(new qt_news_pic(wid_show->get_show_wid(),"1241",false));
+    vlogf("send_pic");
+
+//    //发送信息并清屏
+//    QString word = edit_in->toPlainText();
+//    if(word.isEmpty() == false)
 //    {
-//        out<<"in: "<<a<<endl;
+
+//        edit_in->setText("");
 //    }
 }

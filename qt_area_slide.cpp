@@ -9,12 +9,12 @@ qt_area_slide::qt_area_slide(QWidget *parent) : QScrollArea(parent)
 
 void qt_area_slide::set_size_wid(int wide, int high)
 {
-    wid_slide->resize(QSize(wide,high));
+    wid_slide->resize(wide,high);
 }
 
 void qt_area_slide::set_size_area(int wide, int high)
 {
-    this->resize(QSize(wide,high));
+    this->resize(wide,high);
 }
 
 void qt_area_slide::less_frame()

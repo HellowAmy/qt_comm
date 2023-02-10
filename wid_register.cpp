@@ -8,6 +8,10 @@ wid_register::wid_register(QWidget *parent)
     this->open_lessframe();
     this->open_backdrop(":/pic/pic_bake_login.png");
 
+    //输入昵称
+    edit_name = new wid_edit(this);
+    edit_name->set_txt_lab("昵称");
+
     //输入密码
     edit_passwd = new wid_edit(this);
     edit_passwd->set_txt_lab("密码");
@@ -25,6 +29,7 @@ wid_register::wid_register(QWidget *parent)
     butt_back->set_txt("返回");
 
     qt_move_it *vec_move = new qt_move_it(this);
+    vec_move->add_wid(edit_name);
     vec_move->add_wid(edit_passwd);
     vec_move->add_wid(edit_passwd_ok);
     vec_move->add_wid(butt_transmit);
@@ -34,7 +39,7 @@ wid_register::wid_register(QWidget *parent)
     //发送申请密码
     connect(butt_transmit,&qt_button::fa_press,this,[=](){ 
         if(edit_passwd_ok->get_txt() == edit_passwd->get_txt())
-        { emit fa_register(edit_passwd->get_txt()); }
+        { emit fa_register(edit_name->get_txt(),edit_passwd->get_txt()); }
         else { wid_dialog("输入的密码不一致").exec(); }
     });
 

@@ -27,6 +27,9 @@ signals:
 protected:
     wid_login *v_login;
     wid_friends_list *v_friends_list;
+
+    long long v_account;
+    string v_passwd;
 //    ms_web_client *v_register;
 //    shared_ptr<net_connect> sp_net;
 

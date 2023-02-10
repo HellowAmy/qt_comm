@@ -60,8 +60,8 @@ wid_login::wid_login(QWidget *parent)
 
     //注册密码
     connect(v_reginster,&wid_register::fa_register,
-            this,[=](QString passwd){
-        emit fa_register(passwd.toStdString());
+            this,[=](QString name,QString passwd){
+        emit fa_register(name.toStdString(),passwd.toStdString());
     });
 
     //点击登陆

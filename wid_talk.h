@@ -12,6 +12,7 @@
 #include "qt_button.h"
 #include "wid_slide_list.h"
 
+//传输信息类型
 enum en_info
 {
     e_send_txt,
@@ -31,25 +32,30 @@ class wid_talk : public wid_change
 public:
     explicit wid_talk(QWidget *parent = nullptr);
     void set_info(long long account,QString title);
+    void into_news(en_info en,QString info);
     long long get_account();
 
 signals:
-    emit void fa_send_news(en_info en,long long account,QString txt);
+    //发送信息，文字或者文件
+    emit void fa_send_news(en_info en,long long account,QString info);
 
 protected:
     long long v_account;
     QLabel *lab_title;
-    qt_button *butt_transmit;
-    qt_button *butt_hide;
+    qt_button *butt_transmit;//发送按钮
+    qt_button *butt_file;//打开文件
+    qt_button *butt_hide;//隐藏窗口
 
     qt_edit_text *edit_in;//输入区域
-    wid_slide_list *wid_show;//显示区域
+    wid_slide_list *wid_show;//显示区域，控制显示区域的整体大小，加载qt_news
 
+    //绘画窗口
     QPoint pos_lien_up;
     QPoint pos_lien_down;
     void paintEvent(QPaintEvent *event) override;
 
     void send_word();//发送到显示区域
+    void send_pic();//发送到显示区域
 };
 
 #endif // WID_TALK_H

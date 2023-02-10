@@ -21,19 +21,15 @@ class qt_news : public QWidget
 {
     Q_OBJECT
 public:
+    QString get_info();//消息格式：[类型]##[对方]##[时间]##[内容]
 
-    void set_size(int wide,int high);
-    void set_self(bool self);
-    void set_news_time(QString time);
-    QString get_self_str(bool self);
-    QWidget* get_news_wid();
-
-    virtual QString to_string_info() = 0;
-    virtual ~qt_news();//提供虚继承析构函数,否着会导致内存泄露
 signals:
 
 protected:
     explicit qt_news(QWidget *parent = nullptr);
+
+    QWidget* init_news(bool self,QString time,QString type,QString content);
+    QString str_info;
 
     QWidget *wid_news;
     QString str_news_time;
@@ -46,32 +42,43 @@ protected:
 
     QFont v_font;
     QString get_time();
+    void set_wid_high(QWidget *wid,int high);
 
     //子类快速写入历史消息
     QString to_info(QString type,bool self,QString time,QString content);
 
+    //绘制时间
     void draw_time(QPainter *show);
     void paintEvent(QPaintEvent *event) override;
 };
 
+//显示文字
 class qt_news_word : public qt_news
 {
     Q_OBJECT
 public:
     explicit qt_news_word(QString word,bool self = true);//通用接口
-    ~qt_news_word();
-    QString to_string_info() override;//返回的历史记录
 
 signals:
 
 protected:
-    QString v_info;
-    QString type = "WORD";
-
     //超过长度则在最大字符前插入换行符
     int line_wrap_max(const QString &str_old,
-                      QString &str_new, int max = 345);
+                      QString &str_new, int max = 390);
     int size_calculate(QString word);//计算文字长度
+};
+
+//显示图片
+class qt_news_pic : public qt_news
+{
+    Q_OBJECT
+public:
+    explicit qt_news_pic(QWidget *parent,QString path,bool self = true);//通用接口
+
+signals:
+
+protected:
+
 };
 
 #endif // QT_NEWS_H

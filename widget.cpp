@@ -30,9 +30,20 @@
 
 #include "vts_vlog.h"
 
+#include "wid_talk.h"
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
 {
+    this->resize(600,600);
+    this->show();
+
+
+
+//    this->resize();
+    wid_talk *hu = new wid_talk(this);
+    hu->into_news(en_info::e_send_txt,"123456789012345678901234567890123456789012345678901234567890");
+    hu->show();
 
 //    QDialog ji;
 //    ji.exec()
@@ -40,11 +51,11 @@ Widget::Widget(QWidget *parent)
 //    ji.exec();
 //    out<< ji.get_status();
 
-    int hu = 100;
-    vlogf("123" vv(hu));
-    vlogd("123" vv(hu));
-    vlogw("123" vv(hu));
-    vloge("123" vv(hu));
+//    int hu = 100;
+//    vlogf("123" vv(hu));
+//    vlogd("123" vv(hu));
+//    vlogw("123" vv(hu));
+//    vloge("123" vv(hu));
 
 //    ji.e
 

@@ -21,9 +21,10 @@ public:
 
 signals:
     emit void fa_back();
-    emit void fa_register(QString passwd);
+    emit void fa_register(QString name,QString passwd);
 
 protected:
+    wid_edit *edit_name;
     wid_edit *edit_passwd;
     wid_edit *edit_passwd_ok;
     qt_button *butt_transmit;

@@ -2,6 +2,8 @@
 #define VTS_VLOG_H
 
 //#include "vts_vlog.h"
+#include <QDebug>
+#define qout qDebug()
 
 
 #include <iostream>

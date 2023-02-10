@@ -22,6 +22,7 @@ public:
     void add_widget(qt_news *wid);//添加控件到滑动窗口
     void set_size(int wide,int high);//设置可见窗口大小
     void set_space(int space);//设置添加滑动窗口间隔
+    QWidget* get_show_wid();
 
     QVector<QString> get_history();
 
