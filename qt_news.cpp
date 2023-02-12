@@ -199,24 +199,41 @@ qt_news_file::qt_news_file(QWidget *parent, QString filename, bool self)
 {
     //获取容器列表的控制权
     QWidget *wid_show = init_news(parent,self,get_time(),"FILE",filename);
+    is_self = self;
+    v_filename = filename;
 
     //显示图片
-    QLabel *lab_box = new QLabel(wid_show);
+    lab_box = new QLabel(wid_show);
     lab_box->show();
     lab_box->resize(wid_show->width(),40);
     lab_box->setAlignment(Qt::AlignCenter);
-    lab_box->setFont(QFont("",16));
+    lab_box->setFont(QFont("",14));
+
+    //进度条
+    v_prog = new QProgressBar(wid_show);
+    v_prog->setValue(0);
+    v_prog->resize(wid_show->width(),20);
+    v_prog->setRange(0,100);
+    v_prog->move(lab_box->pos()+QPoint(0,lab_box->height()-10));
+    v_prog->show();
 
     //区分不同发送者
     if(self)
     {
         lab_box->setAlignment(Qt::AlignRight);
-        lab_box->setText("<<< <<< <<< [ "+filename+" ]");
+        lab_box->setText("<<< <<< [ "+v_filename+" ] [ "+v_status+" ]");
     }
     else
     {
         lab_box->setAlignment(Qt::AlignLeft);
-        lab_box->setText("[ "+filename+" ] >>> >>> >>>");
+        lab_box->setText("[ "+v_status+" ][ "+v_filename+" ] >>> >>>");
     }
-    set_wid_high(lab_box,40);
+    set_wid_high(lab_box,40*2+10);
+}
+
+void qt_news_file::set_status(QString status,int prog)
+{
+    if(is_self) lab_box->setText("<<< <<< [ "+v_filename+" ] [ "+status+" ]");
+    else lab_box->setText("[ "+status+" ][ "+v_filename+" ] >>> >>>");
+    v_prog->setValue(prog);
 }

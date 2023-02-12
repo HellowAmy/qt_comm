@@ -62,6 +62,21 @@ wid_talk::wid_talk(QWidget *parent)
     wid_show->move(10,40);
     wid_show->set_size(this->width() - 10*2,390);
 
+
+    map_task_into.insert(en_info::e_send_txt,std::bind(&wid_talk::show_word,this,_1));
+    map_task_into.insert(en_info::e_send_pic,std::bind(&wid_talk::show_pic,this,_1));
+    map_task_into.insert(en_info::e_send_file,std::bind(&wid_talk::show_file,this,_1));
+    map_task_into.insert(en_info::e_send_file_prog,std::bind(&wid_talk::show_file_prog,this,_1));
+
+
+//    if(en == en_info::e_send_txt)
+//    { show_word(info); }
+//    else if (en == en_info::e_send_pic)
+//    { show_pic(info); }
+//    else if (en == en_info::e_send_file)
+//    { show_file(info); }
+//    else { vlogw("into_news not find"); }
+
 //    //
 //    QLabel *uw=new QLabel(wid_show);
 //    uw->resize(wid_show->size());
@@ -88,14 +103,11 @@ wid_talk::wid_talk(QWidget *parent)
         send_word();
     });
 
-    //发送信号--回车
+    //发送文件
     connect(butt_file,&qt_button::fa_press,this,[=](){
         QStringList list = QFileDialog::getOpenFileNames(this,"Send Files","/home/red/test/");
         for(auto a:list)
-        {
-            send_file(a);
-//            qout<<a;
-        }
+        { send_file(a); }
 
     });
 
@@ -125,13 +137,10 @@ void wid_talk::set_drag(bool drag)
 void wid_talk::into_news(en_info en, QString info)
 {
     this->show();
-    if(en == en_info::e_send_txt)
-    { show_word(info); }
-    else if (en == en_info::e_send_pic)
-    { show_pic(info); }
-    else if (en == en_info::e_send_file)
-    { show_file(info); }
-    else { vlogw("into_news not find"); }
+    auto it = map_task_into.find(en);
+    if(it != map_task_into.end())
+    { it.value()(info); }
+    else { vlogw("map_task_into: into_news not find"); }
 }
 
 void wid_talk::paintEvent(QPaintEvent *e)
@@ -167,7 +176,9 @@ void wid_talk::send_word()
 
 void wid_talk::send_file(QString filename)
 {
-    wid_show->add_widget(new qt_news_file(wid_show->get_show_wid(),filename));
+    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename);
+    map_file_prog.insert(filename,temp);
+    wid_show->add_widget(temp);
     emit fa_send_news(en_info::e_send_file,v_account,filename);
     vlogf("send_file");
 }
@@ -203,8 +214,32 @@ void wid_talk::show_pic(QString file_path)
 
 void wid_talk::show_file(QString filename)
 {
-    wid_show->add_widget(new qt_news_file(wid_show->get_show_wid(),filename,false));
+    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename,false);
+    map_file_prog.insert(filename,temp);
+    wid_show->add_widget(temp);
     vlogw("show_file");
+}
+
+void wid_talk::show_file_prog(QString info)
+{
+    qout<<info;
+    QString filename = info.section("##",0,0);
+    QString prog = info.section("##",1,1);
+    QString finish = info.section("##",2,2);
+    if(filename.isEmpty() == false
+            && prog.isEmpty() == false
+            && finish.isEmpty() == false)
+    {
+        auto it = map_file_prog.find(filename);
+        if(it != map_file_prog.end())
+        {
+            if(finish == "0") it.value()->set_status("发送进度",prog.toInt());
+            else if(finish == "1") it.value()->set_status("发送完成",100);
+            else vlogw("prog value");
+        }
+        else vlogw("map_file_prog not find");
+    }
+    else vlogw("info is empty");
 }
 
 void wid_talk::dragEnterEvent(QDragEnterEvent *e)

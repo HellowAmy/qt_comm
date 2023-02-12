@@ -60,8 +60,6 @@ protected:
     qt_area_slide *area;
     qt_button *butt_close;
 
-//    shared_ptr<net_connect> sp_net;
-
     int v_wide=250;
     int v_high=600;
     int v_less=100;

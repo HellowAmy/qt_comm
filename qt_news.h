@@ -6,6 +6,7 @@
 #include <QDateTime>
 #include <QLabel>
 #include <QPixmap>
+#include <QProgressBar>
 
 #include "vts_vlog.h"
 
@@ -88,11 +89,17 @@ class qt_news_file : public qt_news
     Q_OBJECT
 public:
     explicit qt_news_file(QWidget *parent,QString filename,bool self = true);//通用接口
+    void set_status(QString status,int prog);
 
 signals:
 
 protected:
+    bool is_self;
+    QString v_filename;
+    QString v_status = "发送建立";
 
+    QLabel *lab_box;
+    QProgressBar *v_prog;
 };
 
 #endif // QT_NEWS_H

@@ -1,10 +1,6 @@
 ﻿#include "widget.h"
 #include "wid_manage.h"
-//#include "lib/vts/vts.h"
-
 #include <QApplication>
-
-//using vts::vlog;
 
 //! =====各类功能=====
 //! 从wid_manage开始运行

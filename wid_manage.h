@@ -2,6 +2,7 @@
 #define WID_MANAGE_H
 
 #include <QObject>
+#include <QThread>
 
 //#include "net_connect.h"
 //#include "ms_web_client.h"

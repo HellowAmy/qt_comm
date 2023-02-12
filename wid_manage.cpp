@@ -11,7 +11,6 @@ wid_manage::wid_manage(QWidget *parent)
     v_friends_list = new wid_friends_list;//好友列表
     v_friends_list->close();
 
-
     QVector<ct_friends_info> vec;
     vec.push_back(ct_friends_info{1256757890,"ty1256757890"});
     vec.push_back(ct_friends_info{1251251890,"t212y1251251890"});
@@ -61,7 +60,36 @@ wid_manage::wid_manage(QWidget *parent)
 
 
             QTimer::singleShot(500,this,[=](){
+
                 v_friends_list->into_news(en_info::e_send_file,account,QString::fromStdString(txt));
+
+                //进度条测试
+                for(int i=0;i<100;i++)
+                {
+                    QThread::msleep(100);
+                    QString finish = "0";
+                    if(i==99) finish="1";
+                    QString info=QString::fromStdString(txt)+"##"+QString::number(i)+"##"+finish;
+                    v_friends_list->into_news(en_info::e_send_file_prog,account,info);
+                }
+            });
+        }
+        else if(en == en_info::e_send_file_prog)
+        {
+
+            vlogf("en_info" vv(account) vv(txt));
+
+            for(int i=0;i<100;i++)
+            {
+                QThread::msleep(100);
+                QString finish = "0";
+                if(i==99) finish=1;
+                QString info="##"+QString::fromStdString(txt)+"##"+QString::number(i)+finish;
+                v_friends_list->into_news(en_info::e_send_file_prog,account,info);
+            }
+            QTimer::singleShot(500,this,[=](){
+
+
             });
         }
     });

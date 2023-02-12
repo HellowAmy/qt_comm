@@ -1,8 +1,5 @@
 ﻿#include "wid_friends_list.h"
 
-#include <QDebug>
-#define out qDebug()
-
 wid_friends_list::wid_friends_list(QWidget *parent)
     : wid_change{parent}
 {
@@ -26,18 +23,6 @@ wid_friends_list::wid_friends_list(QWidget *parent)
     butt_close->move(this->width()/2 - butt_close->width()/2,
                      this->height() - butt_close->height());
     butt_close->set_txt("<=退出=>");
-
-    //== 测试===
-    QVector<QString> vet_s;
-    for(int i=0;i<20;i++)
-    {
-        vet_s.push_back("你是谁abCD第 "+QString::number(i)+" 位");
-    }
-    //== 测试===
-
-
-//    创建好友列表
-//    set_friends(vet_s);
 
     //关闭窗口
     connect(butt_close,&qt_button::fa_press,this,[=](){
@@ -75,14 +60,13 @@ void wid_friends_list::into_friends(QMap<long long, std::string> map)
     for(auto it = map_wid_talk.begin();it != map_wid_talk.end();it++)
     {
         vec_move.add_wid(it->butt);//添加到自动排序容器
-        vlogf("pp");
 
-        //显示聊天窗口
+        //连接信号--显示聊天窗口
         connect(it->butt,&qt_button::fa_press,this,[=](){
             it->wid->show();
         });
 
-        //转发信息
+        //连接信号--转发信息
         connect(it->wid,&wid_talk::fa_send_news,this,
                 [=](en_info en,long long account,QString txt){
             this->fa_send_news(en,account,txt.toStdString());

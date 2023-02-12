@@ -16,12 +16,18 @@
 #include "qt_button.h"
 #include "wid_slide_list.h"
 
+#include <functional>
+using std::function;
+using std::bind;
+using std::placeholders::_1;
+
 //传输信息类型
 enum en_info
 {
     e_send_txt,
     e_send_pic,
-    e_send_file
+    e_send_file,
+    e_send_file_prog
 };
 
 //!
@@ -53,6 +59,9 @@ protected:
     qt_button *butt_file;//打开文件
     qt_button *butt_hide;//隐藏窗口
 
+    QMap<QString,qt_news_file*> map_file_prog;//文件进度查找
+    QMap<en_info,std::function<void(QString)>> map_task_into;//传入的显示界面函数查询
+
     qt_edit_text *edit_in;//输入区域
     wid_slide_list *wid_show;//显示区域，控制显示区域的整体大小，加载qt_news
 
@@ -70,6 +79,9 @@ protected:
     void show_word(QString txt);//显示文字
     void show_pic(QString file_path);//显示图片
     void show_file(QString filename);//发送文件
+
+    //文件进度(需要三个字段:文件名,进度值,是否完成(prog/finish))(分割符:##)
+    void show_file_prog(QString info);
 
     //
     bool is_drag = true;
