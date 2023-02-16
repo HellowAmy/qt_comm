@@ -176,11 +176,11 @@ void wid_talk::send_word()
 
 void wid_talk::send_file(QString filename)
 {
-    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename);
-    map_file_prog.insert(filename,temp);
-    wid_show->add_widget(temp);
-    emit fa_send_news(en_info::e_send_file,v_account,filename);
-    vlogf("send_file");
+//    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename);
+//    map_file_prog.insert(filename,temp);
+//    wid_show->add_widget(temp);
+//    emit fa_send_news(en_info::e_send_file,v_account,filename);
+//    vlogf("send_file");
 }
 
 void wid_talk::send_pic(QList<QString> list)
@@ -199,6 +199,15 @@ void wid_talk::send_pic(QList<QString> list)
     vlogf("send_pic");
 }
 
+void wid_talk::send_ask(QString filename)
+{
+    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename);
+    map_file_prog.insert(filename,temp);
+    wid_show->add_widget(temp);
+    emit fa_send_news(en_info::e_send_file_ask,v_account,filename);
+    vlogf("send_ask");
+}
+
 void wid_talk::show_word(QString txt)
 {
     wid_show->add_widget(new qt_news_word(wid_show->get_show_wid(),txt,false));
@@ -212,12 +221,20 @@ void wid_talk::show_pic(QString file_path)
     else vlogw("show_pic err");
 }
 
-void wid_talk::show_file(QString filename)
+void wid_talk::show_ask(QString filename)
 {
     qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename,false);
     map_file_prog.insert(filename,temp);
     wid_show->add_widget(temp);
-    vlogw("show_file");
+    vlogw("show_ask");
+}
+
+void wid_talk::show_file(QString filename)
+{
+//    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename,false);
+//    map_file_prog.insert(filename,temp);
+//    wid_show->add_widget(temp);
+//    vlogw("show_file");
 }
 
 void wid_talk::show_file_prog(QString info)
