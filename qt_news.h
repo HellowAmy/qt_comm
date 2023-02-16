@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPainter>
 #include <QDateTime>
+#include <QPushButton>
 #include <QLabel>
 #include <QPixmap>
 #include <QProgressBar>
@@ -88,10 +89,14 @@ class qt_news_file : public qt_news
 {
     Q_OBJECT
 public:
-    explicit qt_news_file(QWidget *parent,QString filename,bool self = true);//通用接口
+    //通用接口
+    explicit qt_news_file
+        (QWidget *parent,QString filename,bool self = true,bool ask = false);
     void set_status(QString status,int prog);
 
 signals:
+    emit void fa_ok();
+    emit void fa_no();
 
 protected:
     bool is_self;
@@ -99,6 +104,8 @@ protected:
     QString v_status = "发送建立";
 
     QLabel *lab_box;
+    QPushButton *butt_ok;
+    QPushButton *butt_no;
     QProgressBar *v_prog;
 };
 

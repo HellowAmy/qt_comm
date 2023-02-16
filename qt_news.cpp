@@ -195,7 +195,7 @@ qt_news_pic::qt_news_pic(QWidget *parent, const QPixmap &pix, QString path, bool
     set_wid_high(lab_pic,temp.height());
 }
 
-qt_news_file::qt_news_file(QWidget *parent, QString filename, bool self)
+qt_news_file::qt_news_file(QWidget *parent, QString filename, bool self,bool ask)
 {
     //获取容器列表的控制权
     QWidget *wid_show = init_news(parent,self,get_time(),"FILE",filename);
@@ -228,6 +228,33 @@ qt_news_file::qt_news_file(QWidget *parent, QString filename, bool self)
         lab_box->setAlignment(Qt::AlignLeft);
         lab_box->setText("[ "+v_status+" ][ "+v_filename+" ] >>> >>>");
     }
+
+    butt_ok = new QPushButton(wid_show);
+    butt_ok->hide();
+
+    butt_no = new QPushButton(wid_show);
+    butt_no->hide();
+
+    if(ask)
+    {
+        butt_ok->setText("ok");
+        butt_ok->resize(30,30);
+        butt_ok->move(0,0);
+        butt_ok->show();
+
+        butt_no->setText("no");
+        butt_no->resize(butt_ok->size());
+        butt_no->move(butt_ok->width(),0);
+        butt_no->show();
+
+        connect(butt_ok,&QPushButton::clicked,this,&qt_news_file::fa_ok);
+        connect(butt_no,&QPushButton::clicked,this,&qt_news_file::fa_no);
+
+        v_prog->hide();
+        lab_box->move(butt_no->width()*2,0);
+        lab_box->resize(wid_show->width()-butt_no->width()*2,40);
+    }
+
     set_wid_high(lab_box,40*2+10);
 }
 
