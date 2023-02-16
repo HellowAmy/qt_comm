@@ -242,6 +242,21 @@ void wid_talk::show_file_prog(QString info)
     else vlogw("info is empty");
 }
 
+//void wid_talk::show_file_finish(QString info)
+//{
+////    QString filename = info.section("##",0,0);
+////    QString ok = info.section("##",1,1);
+////    auto it = map_file_prog.find(filename);
+////    if(it != map_file_prog.end())
+////    {
+//////        it.value()->set_status("发送完成",100);
+//////        if(finish == "0") it.value()->set_status("发送进度",prog.toInt());
+//////        else if(finish == "1")
+//////        else vlogw("prog value");
+////    }
+////    else vlogw("map_file_prog not find");
+//}
+
 void wid_talk::dragEnterEvent(QDragEnterEvent *e)
 {
     if(is_drag)

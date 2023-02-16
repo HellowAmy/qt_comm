@@ -27,7 +27,7 @@ enum en_info
     e_send_txt,
     e_send_pic,
     e_send_file,
-    e_send_file_prog
+    e_send_file_prog,
 };
 
 //!
@@ -82,6 +82,9 @@ protected:
 
     //文件进度(需要三个字段:文件名,进度值,是否完成(prog/finish))(分割符:##)
     void show_file_prog(QString info);
+
+//    文件完成(需要两个字段:文件名,是否成功)(分割符:##)
+//    void show_file_finish(QString info);
 
     //
     bool is_drag = true;

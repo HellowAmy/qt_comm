@@ -9,6 +9,8 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ../ms_comm/ms_comm_client/ms_web_client.cpp \
+    ../ms_comm/ms_comm_client/net_connect.cpp \
     lab_tips.cpp \
 #    lib/vts/vts.cpp \
     main.cpp \
@@ -36,6 +38,8 @@ SOURCES += \
 
 HEADERS += \
 #    c_define.h \
+    ../ms_comm/ms_comm_client/ms_web_client.h \
+    ../ms_comm/ms_comm_client/net_connect.h \
     lab_tips.h \
 #    lib/vts/vts.h \
     lib/web_sock/include/AsyncHttpClient.h \
