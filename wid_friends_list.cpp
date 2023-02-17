@@ -69,7 +69,7 @@ void wid_friends_list::into_friends(QMap<long long, std::string> map)
         //连接信号--转发信息
         connect(it->wid,&wid_talk::fa_send_news,this,
                 [=](en_info en,long long account,QString txt){
-            this->fa_send_news(en,account,txt.toStdString());
+            this->fa_send_news(en,account,txt);
         });
     }
     vec_move.set_vert(QPoint(0,0));//设置排序方式

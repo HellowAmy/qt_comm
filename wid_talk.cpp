@@ -69,26 +69,6 @@ wid_talk::wid_talk(QWidget *parent)
     map_task_into.insert(en_info::e_send_file_prog,std::bind(&wid_talk::show_file_prog,this,_1));
 
 
-//    if(en == en_info::e_send_txt)
-//    { show_word(info); }
-//    else if (en == en_info::e_send_pic)
-//    { show_pic(info); }
-//    else if (en == en_info::e_send_file)
-//    { show_file(info); }
-//    else { vlogw("into_news not find"); }
-
-//    //
-//    QLabel *uw=new QLabel(wid_show);
-//    uw->resize(wid_show->size());
-//    uw->setText("QFrame::Box: wid_slide_list");
-//    uw->setFrameShape(QFrame::Box);
-//    uw->show();
-//    vlogf("QFrame::Box: wid_slide_list");
-
-//    qout<<wid_show->size()<<"|"<<wid_show->get_show_wid()->size();
-
-//    wid_show->set_size()
-
     //设置窗口背景透明
     wid_show->setPalette
             (QPalette(QPalette::Window,(QColor(0,0,0,0))));
@@ -176,11 +156,11 @@ void wid_talk::send_word()
 
 void wid_talk::send_file(QString filename)
 {
-//    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename);
-//    map_file_prog.insert(filename,temp);
-//    wid_show->add_widget(temp);
-//    emit fa_send_news(en_info::e_send_file,v_account,filename);
-//    vlogf("send_file");
+    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename);
+    map_file_prog.insert(filename,temp);
+    wid_show->add_widget(temp);
+    emit fa_send_news(en_info::e_send_file,v_account,filename);
+    vlogf("send_file");
 }
 
 void wid_talk::send_pic(QList<QString> list)
@@ -199,14 +179,14 @@ void wid_talk::send_pic(QList<QString> list)
     vlogf("send_pic");
 }
 
-void wid_talk::send_ask(QString filename)
-{
-    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename);
-    map_file_prog.insert(filename,temp);
-    wid_show->add_widget(temp);
-    emit fa_send_news(en_info::e_send_file_ask,v_account,filename);
-    vlogf("send_ask");
-}
+//void wid_talk::send_ask(QString filename)
+//{
+////    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename);
+////    map_file_prog.insert(filename,temp);
+////    wid_show->add_widget(temp);
+////    emit fa_send_news(en_info::e_send_file_ask,v_account,filename);
+////    vlogf("send_ask");
+//}
 
 void wid_talk::show_word(QString txt)
 {
@@ -221,25 +201,25 @@ void wid_talk::show_pic(QString file_path)
     else vlogw("show_pic err");
 }
 
-void wid_talk::show_ask(QString filename)
+//void wid_talk::show_ask(QString filename)
+//{
+//    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename,false);
+//    map_file_prog.insert(filename,temp);
+//    wid_show->add_widget(temp);
+//    vlogw("show_ask");
+//}
+
+void wid_talk::show_file(QString filename)
 {
     qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename,false);
     map_file_prog.insert(filename,temp);
     wid_show->add_widget(temp);
-    vlogw("show_ask");
-}
-
-void wid_talk::show_file(QString filename)
-{
-//    qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename,false);
-//    map_file_prog.insert(filename,temp);
-//    wid_show->add_widget(temp);
-//    vlogw("show_file");
+    vlogw("show_file");
 }
 
 void wid_talk::show_file_prog(QString info)
 {
-    qout<<info;
+    vlogf(vv(info.toStdString()));
     QString filename = info.section("##",0,0);
     QString prog = info.section("##",1,1);
     QString finish = info.section("##",2,2);

@@ -52,7 +52,7 @@ public:
     void into_news(en_info en,long long account,QString info);
 
 signals:
-    emit void fa_send_news(en_info en,long long account,string txt);
+    emit void fa_send_news(en_info en,long long account,QString txt);
 
 protected:
     QMap<long long,ct_friends_index> map_wid_talk;

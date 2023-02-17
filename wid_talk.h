@@ -27,13 +27,7 @@ enum en_info
     e_send_txt,
     e_send_pic,
     e_send_file,
-<<<<<<< HEAD
-    e_send_file_prog,
-=======
-    e_send_file_ask,
-    e_send_file_back,
     e_send_file_prog
->>>>>>> 2d0c690d5ed9e13c44ab5cf3ada654702d0712d0
 };
 
 //!
@@ -79,16 +73,16 @@ protected:
     //发送到显示区域(同时发送到网络)
     void send_word();//发送文字
     void send_pic(QList<QString> list);//发送图片
-    void send_ask(QString filename);//发送文件请求
+//    void send_ask(QString filename);//发送文件请求
     void send_file(QString filename);//发送文件
 
     //通过网络回传的内容
     void show_word(QString txt);//显示文字
     void show_pic(QString file_path);//显示图片
-    void show_ask(QString file_path);//显示文件请求
+//    void show_ask(QString file_path);//显示文件请求
     void show_file(QString filename);//发送文件
 
-    //文件进度(需要三个字段:文件名,进度值,是否完成(prog/finish))(分割符:##)
+    //文件进度(需要三个字段:文件名,进度值,是否完成[0/1](prog/finish))(分割符:##)
     void show_file_prog(QString info);
 
 //    文件完成(需要两个字段:文件名,是否成功)(分割符:##)

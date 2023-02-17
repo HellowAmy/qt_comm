@@ -255,7 +255,7 @@ qt_news_file::qt_news_file(QWidget *parent, QString filename, bool self,bool ask
         lab_box->resize(wid_show->width()-butt_no->width()*2,40);
     }
 
-    set_wid_high(lab_box,40*2+10);
+    set_wid_high(lab_box,40+10);
 }
 
 void qt_news_file::set_status(QString status,int prog)

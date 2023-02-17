@@ -61,12 +61,12 @@ wid_login::wid_login(QWidget *parent)
     //注册密码
     connect(v_reginster,&wid_register::fa_register,
             this,[=](QString name,QString passwd){
-        emit fa_register(name.toStdString(),passwd.toStdString());
+        emit fa_register(name,passwd);
     });
 
     //点击登陆
     connect(butt_login,&qt_button::fa_press,this,[=](){
-        emit fa_login(edit_account->get_txt().toLongLong(),edit_passwd->get_txt().toStdString());
+        emit fa_login(edit_account->get_txt().toLongLong(),edit_passwd->get_txt());
     });
 
     //进入注册界面
