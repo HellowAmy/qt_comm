@@ -9,6 +9,9 @@
 #include <QSet>
 
 //#include "net_connect.h"
+
+
+#include "wid_add_friend.h"
 #include "wid_change.h"
 #include "wid_edit.h"
 #include "qt_button.h"
@@ -45,6 +48,7 @@ class wid_friends_list : public wid_change
 public:
     explicit wid_friends_list(QWidget *parent = nullptr);
     ~wid_friends_list();
+    void set_account(long long account);
 
     //将容器内昵称转为按钮
     //（参数1：昵称容器）
@@ -53,16 +57,24 @@ public:
 
 signals:
     emit void fa_send_news(en_info en,long long account,QString txt);
+    emit void fa_add_friend(long long account);
 
 protected:
     QMap<long long,ct_friends_index> map_wid_talk;
     QWidget *wid_slide;
     qt_area_slide *area;
+    wid_add_friend *wid_add;
     qt_button *butt_close;
+    qt_button *butt_add;
+    QString v_file_path = "/tmp/qt_comm_cache/account/";
 
+    long long v_account;
     int v_wide=250;
     int v_high=600;
     int v_less=100;
+
+    void clear_wid_talk();
+
 };
 
 #endif // WID_FRIENDS_LIST_H

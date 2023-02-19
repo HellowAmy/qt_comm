@@ -11,6 +11,7 @@ wid_register_back::wid_register_back(QWidget *parent) : wid_change(parent)
     lab_account = new lab_tips(this);
     lab_account->resize(200,45);
     lab_account->setText("账号：无效申请");
+    lab_account->open_copy();
     lab_account->show();
 
     //显示提示信息

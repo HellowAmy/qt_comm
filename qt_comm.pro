@@ -24,6 +24,7 @@ SOURCES += \
     qt_move_it.cpp \
     qt_news.cpp \
 #    tcp_socket.cpp \
+    wid_add_friend.cpp \
     wid_change.cpp \
     wid_dialog.cpp \
     wid_edit.cpp \
@@ -125,6 +126,7 @@ HEADERS += \
 #    tcp_socket.h \
 #    vlog.h \
     vts_vlog.h \
+    wid_add_friend.h \
     wid_change.h \
     wid_dialog.h \
     wid_edit.h \

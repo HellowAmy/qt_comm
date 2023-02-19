@@ -42,7 +42,9 @@ class wid_talk : public wid_change
     Q_OBJECT
 public:
     explicit wid_talk(QWidget *parent = nullptr);
-    void set_info(long long account,QString title);
+    void set_filename(QString filename);
+    bool load_news();
+    void set_info(long long account_from,long long account_to,QString title);
     void into_news(en_info en,QString info);
     long long get_account();
 
@@ -53,7 +55,8 @@ signals:
     emit void fa_send_news(en_info en,long long account,QString info);
 
 protected:
-    long long v_account;
+    long long v_account_to;
+    long long v_account_from;
     QLabel *lab_title;
     qt_button *butt_transmit;//发送按钮
     qt_button *butt_file;//打开文件
@@ -73,26 +76,20 @@ protected:
     //发送到显示区域(同时发送到网络)
     void send_word();//发送文字
     void send_pic(QList<QString> list);//发送图片
-//    void send_ask(QString filename);//发送文件请求
     void send_file(QString filename);//发送文件
 
     //通过网络回传的内容
     void show_word(QString txt);//显示文字
     void show_pic(QString file_path);//显示图片
-//    void show_ask(QString file_path);//显示文件请求
     void show_file(QString filename);//发送文件
 
     //文件进度(需要三个字段:文件名,进度值,是否完成[0/1](prog/finish))(分割符:##)
     void show_file_prog(QString info);
 
-//    文件完成(需要两个字段:文件名,是否成功)(分割符:##)
-//    void show_file_finish(QString info);
-
-    //
+    //拖动表情包并发送
     bool is_drag = true;
     virtual void dragEnterEvent(QDragEnterEvent *e) override;
     virtual void dropEvent(QDropEvent *e) override;
-
 };
 
 #endif // WID_TALK_H

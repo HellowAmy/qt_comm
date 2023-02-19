@@ -12,7 +12,7 @@ class lab_tips : public QLabel
     Q_OBJECT
 public:
     explicit lab_tips(QWidget *parent = nullptr,const QColor &col = Qt::darkYellow);
-
+    void open_copy();
 signals:
 
 protected:

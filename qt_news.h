@@ -47,7 +47,7 @@ protected:
     QString get_time();
     void set_wid_high(QWidget *wid,int high);
 
-    //子类快速写入历史消息
+    //子类快速写入历史消息([1]写入类型,[2]是否为我方写入,[3]写入时间,[4]写入内容)
     QString to_info(QString type,bool self,QString time,QString content);
 
     //绘制时间

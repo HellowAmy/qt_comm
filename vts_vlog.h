@@ -5,7 +5,6 @@
 #include <QDebug>
 #define qout qDebug()
 
-
 #include <iostream>
 using std::cout;
 using std::endl;

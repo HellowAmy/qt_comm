@@ -9,50 +9,16 @@
 wid_manage::wid_manage(QWidget *parent)
     : QObject{parent}
 {
-
-    v_net = new net_connect;
-    if(v_net->open_connect() < 0) { vloge("open_connect err"); };
-
     v_login = new wid_login;//登录窗口
     v_login->show();
 
     v_friends_list = new wid_friends_list;//好友列表
     v_friends_list->close();
 
-//    QVector<ct_friends_info> vec;
-//    vec.push_back(ct_friends_info{1256757890,"ty1256757890"});
-//    vec.push_back(ct_friends_info{1251251890,"t212y1251251890"});
-//    vec.push_back(ct_friends_info{1212471890,"1212471890"});
-//    vec.push_back(ct_friends_info{3456757890,"阿uh"});
-//    vec.push_back(ct_friends_info{6786757890,"阿角色大赛的"});
-//    vec.push_back(ct_friends_info{1256757890,"4574"});
-//    vec.push_back(ct_friends_info{8568464564,"3498斯蒂芬"});
+    v_net = new net_connect;
+    if(v_net->open_connect() < 0) { vloge("open_connect err"); };
 
-    QMap<long long,string> map;
-    map.insert(1045809651,"1045809651");
-    map.insert(1707618208,"1707618208");
-    map.insert(1934865572,"1934865572");
-    map.insert(2529453605,"2529453605");
-
-    v_friends_list->into_friends(map);
-
-//    1045809651123qwe
-//    1707618208123456
-//    1746135720123456
-//    1934865572123qwe
-//    2510663968123456
-//    2529453605123456
-//    2990771611123456
-//    3359116136123qwe
-//    3467939625123456
-//    4093996320123qwe
-//    4287066047123456
-//    5429832273123456
-//    5511780295123qwe
-//    5512053180123456
-
-
-    //发送--发送到网络//========================
+    //发送--用户输入信息
     connect(v_friends_list,&wid_friends_list::fa_send_news,this,
             [=](en_info en,long long account,QString info){
 
@@ -73,6 +39,12 @@ wid_manage::wid_manage(QWidget *parent)
             QFileInfo info_file(info);
             v_net->ask_swap_file(account,info_file.fileName(),info,en_build_file::e_file);
         }
+    });
+
+    //发送--添加好友请求
+    connect(v_friends_list,&wid_friends_list::fa_add_friend,this,
+            [=](long long account){
+        v_net->ask_swap_add_friend(account);
     });
 
     //发送--发送到网络//========================
@@ -105,18 +77,14 @@ wid_manage::wid_manage(QWidget *parent)
             [=](long long account,QString passwd,bool ok){
 
         vlogf("fa_register" vv(account) vv(qtos(passwd)) vv(ok));//
+        v_login->show_register_back(ok,account);
     });
 
     connect(v_net,&net_connect::fa_login_back,this,
             [=](long long account,bool ok){
 
         vlogf("fa_login_back" vv(account) vv(ok));
-        if(ok)
-        {
-            v_friends_list->move(v_login->pos());
-            v_login->close();
-            v_friends_list->show();
-        }
+        if(ok) { v_net->ask_friends_list(v_net->get_account()); }
     });
 
     connect(v_net,&net_connect::fa_logout_back,this,
@@ -133,11 +101,54 @@ wid_manage::wid_manage(QWidget *parent)
         if(ok) v_net->close_connect();
     });
 
+    connect(v_net,&net_connect::fa_friends_list_back,this,
+            [=](QMap<long long,string> map){
+
+        for(auto it=map.begin();it!=map.end();it++)
+        {
+            vlogf(vv(it.key()) vv(it.value()));
+        }
+
+        if(v_login->isHidden() == false)
+        {
+            v_friends_list->set_account(v_net->get_account());
+            v_friends_list->move(v_login->pos());
+            v_login->close();
+        }
+
+        v_friends_list->into_friends(map);
+        v_friends_list->show();
+    });
+
+    connect(v_net,&net_connect::fa_add_ret_back,this,
+            [=](long long account,bool ok,bool self){
+        if(self == true) { v_net->ask_friends_list(v_net->get_account()); }
+        else
+        {
+            QString info;
+            if(ok) { info = "成功添加账号: " + QString::number(account); }
+            else { info = "对方不同意添加为好友: " + QString::number(account);  }
+            wid_dialog temp(info);
+            temp.exec();
+
+            if(ok) { v_net->ask_friends_list(v_net->get_account()); }
+        }
+    });
+
+    //交换函数
     connect(v_net,&net_connect::fa_swap_txt,this,
             [=](long long account_from,QString txt){
 
         vlogf("fa_prog_send" vv(account_from) vv(qtos(txt)));//
         v_friends_list->into_news(en_info::e_send_txt,account_from,txt);
+    });
+
+    connect(v_net,&net_connect::fa_swap_add_friend,this,
+            [=](long long account_from){
+        QString info = "同意添加[ "+ QString::number(account_from) +" ]为好友吗";
+        wid_dialog temp(info);
+        temp.exec();
+        v_net->ask_add_ret(account_from,temp.get_status());
     });
 
     connect(v_net,&net_connect::fa_swap_build,this,
@@ -155,10 +166,8 @@ wid_manage::wid_manage(QWidget *parent)
 
         if(type == en_build_file::e_file)
         {
-            int now = 99;
-            if(is_ok) now = 100;
             //文件进度(需要三个字段:文件名,进度值,是否完成(prog/finish))(分割符:##)
-            QString info = filename+"##"+QString::number(now)+"##"+"1";
+            QString info = filename+"##100##1";
             v_friends_list->into_news(en_info::e_send_file_prog,account_from,info);
         }
         else if(type == en_build_file::e_spic)
@@ -172,15 +181,10 @@ wid_manage::wid_manage(QWidget *parent)
 
         if(type == en_build_file::e_file)
         {
-            int now = 99;
-            if(is_ok) now = 100;
             //文件进度(需要三个字段:文件名,进度值,是否完成(prog/finish))(分割符:##)
-            QString info = filename+"##"+QString::number(now)+"##"+"1";
+            QString info = filename+"##100##1";
             v_friends_list->into_news(en_info::e_send_file_prog,account_from,info);
         }
-        else if(type == en_build_file::e_spic)
-        { v_friends_list->into_news(en_info::e_send_pic,account_from,filename); }
-
         vlogf("fa_swap_file_ret" vv(account_from) vv(qtos(filename)) vv(type) vv(is_ok));//
     });
 
@@ -190,26 +194,23 @@ wid_manage::wid_manage(QWidget *parent)
         vlogf("fa_swap_error" vv(account_from) vv(err));//
     });
 
+    connect(v_net,&net_connect::fa_prog_send,this,
+            [=](QString filename,long long account_from,int now){
 
-//    //==数据交换
-//    connect(v_net,&net_connect::fa_prog_send,this,
-//            [=](QString filename,long long account_from,int now){
+        //文件进度(需要三个字段:文件名,进度值,是否完成(prog/finish))(分割符:##)
+        QString info = filename+"##"+QString::number(now)+"##0";
+        v_friends_list->into_news(en_info::e_send_file_prog,account_from,info);
+//        vlogf("fa_prog_send: " vv(qtos(filename)) vv(account_from)  vv(now));//
+    });
 
-//        //文件进度(需要三个字段:文件名,进度值,是否完成(prog/finish))(分割符:##)
-//        QString info = filename+"##"+QString::number(now)+"prog";
-//        v_friends_list->into_news(en_info::e_send_file_prog,account_from,info);
-//        vlogf("fa_prog_send" vv(qtos(filename)) vv(now) vv(info.toStdString()));//
-//    });
+    connect(v_net,&net_connect::fa_prog_recv,this,
+            [=](QString filename,long long account_from,int now){
 
-//    connect(v_net,&net_connect::fa_prog_recv,this,
-//            [=](QString filename,long long account_from,int now){
-
-//        QString info = filename+"##"+QString::number(now)+"prog";
-//        v_friends_list->into_news(en_info::e_send_file_prog,account_from,info);
-//        vlogf("fa_prog_recv" vv(qtos(filename)) vv(now) vv(info.toStdString()));//
-//    });
-
-
+        //文件进度(需要三个字段:文件名,进度值,是否完成(prog/finish))(分割符:##)
+        QString info = filename+"##"+QString::number(now)+"##0";
+        v_friends_list->into_news(en_info::e_send_file_prog,account_from,info);
+//        vlogf("fa_prog_recv: " vv(qtos(filename)) vv(account_from)  vv(now));//
+    });
     //===== 网络反馈 =====
 }
 

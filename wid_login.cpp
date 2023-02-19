@@ -78,17 +78,12 @@ wid_login::wid_login(QWidget *parent)
 
     //关闭反馈界面
     connect(v_register_back,&wid_register_back::fa_back,this,[=](){
-//        this->fa_back();
         this->move(v_register_back->pos());
         this->show();
         v_register_back->close();
-
-//        butt_close->fa_press();
-//        v_register_back->close();
     });
 
     connect(butt_close,&qt_button::fa_press,this,&QWidget::close);//关闭窗口
-
 }
 
 void wid_login::show_register_back(bool is_success, long long account)

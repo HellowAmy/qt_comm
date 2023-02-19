@@ -10,3 +10,6 @@ lab_tips::lab_tips(QWidget *parent,const QColor &col) : QLabel(parent)
     this->setAlignment(Qt::AlignCenter);
     this->setPalette(palette);
 }
+
+void lab_tips::open_copy()
+{  this->setTextInteractionFlags(Qt::TextSelectableByMouse); }

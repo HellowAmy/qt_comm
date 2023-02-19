@@ -62,12 +62,11 @@ wid_talk::wid_talk(QWidget *parent)
     wid_show->move(10,40);
     wid_show->set_size(this->width() - 10*2,390);
 
-
+    //绑定查询函数
     map_task_into.insert(en_info::e_send_txt,std::bind(&wid_talk::show_word,this,_1));
     map_task_into.insert(en_info::e_send_pic,std::bind(&wid_talk::show_pic,this,_1));
     map_task_into.insert(en_info::e_send_file,std::bind(&wid_talk::show_file,this,_1));
     map_task_into.insert(en_info::e_send_file_prog,std::bind(&wid_talk::show_file_prog,this,_1));
-
 
     //设置窗口背景透明
     wid_show->setPalette
@@ -97,15 +96,22 @@ wid_talk::wid_talk(QWidget *parent)
     });
 }
 
-void wid_talk::set_info(long long account, QString title)
+void wid_talk::set_filename(QString filename)
+{ wid_show->set_filename(filename); }
+
+bool wid_talk::load_news()
+{ return wid_show->load_history(); }
+
+void wid_talk::set_info(long long account_from, long long account_to, QString title)
 {
-    v_account = account;
+    v_account_from = account_from;
+    v_account_to = account_to;
     lab_title->setText(title);
 }
 
 long long wid_talk::get_account()
 {
-    return v_account;
+    return v_account_to;
 }
 
 void wid_talk::set_drag(bool drag)
@@ -149,7 +155,7 @@ void wid_talk::send_word()
     if(word.isEmpty() == false)
     {
         wid_show->add_widget(new qt_news_word(wid_show->get_show_wid(),word));
-        emit fa_send_news(en_info::e_send_txt,v_account,word);
+        emit fa_send_news(en_info::e_send_txt,v_account_to,word);
         edit_in->setText("");
     }
 }
@@ -159,7 +165,7 @@ void wid_talk::send_file(QString filename)
     qt_news_file *temp = new qt_news_file(wid_show->get_show_wid(),filename);
     map_file_prog.insert(filename,temp);
     wid_show->add_widget(temp);
-    emit fa_send_news(en_info::e_send_file,v_account,filename);
+    emit fa_send_news(en_info::e_send_file,v_account_to,filename);
     vlogf("send_file");
 }
 
@@ -172,7 +178,7 @@ void wid_talk::send_pic(QList<QString> list)
         if(pix.load(file_path))
         {
             wid_show->add_widget(new qt_news_pic(wid_show->get_show_wid(),pix,file_path));
-            emit fa_send_news(en_info::e_send_pic,v_account,file_path);
+            emit fa_send_news(en_info::e_send_pic,v_account_to,file_path);
         }
         else vlogw("load failed:" vv(file_path.toStdString()));
     }

@@ -9,7 +9,7 @@ wid_dialog::wid_dialog(QString info,int wide,QWidget *parent) : QDialog(parent)
     palette.setColor(QPalette::Window,QColor(230,200,160));//255,255,200
     this->setPalette(palette);
 
-    //显示账号
+    //显示信息
     lab_info = new lab_tips(this,Qt::red);
     lab_info->move(space,space);
     lab_info->resize(wide-space*2,high/2);
