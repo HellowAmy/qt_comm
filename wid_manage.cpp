@@ -1,8 +1,5 @@
 ﻿#include "wid_manage.h"
 
-#include <QTimer>
-
-
 #define qfrs(str) QString::fromStdString(str)
 #define qtos(str) str.toStdString()
 
@@ -14,9 +11,10 @@ wid_manage::wid_manage(QWidget *parent)
 
     v_friends_list = new wid_friends_list;//好友列表
     v_friends_list->close();
-
+//139.159.196.60
     v_net = new net_connect;
-    if(v_net->open_connect() < 0) { vloge("open_connect err"); };
+//    if(v_net->open_connect() < 0) { vloge("open_connect err"); };
+    if(v_net->open_connect("139.159.196.60",5005,"") < 0) { vloge("open_connect err"); };
 
     //发送--用户输入信息
     connect(v_friends_list,&wid_friends_list::fa_send_news,this,
@@ -60,7 +58,7 @@ wid_manage::wid_manage(QWidget *parent)
             [=](QString name,QString passwd){
 
         vlogf("fa_register" vv(qtos(passwd)) vv(qtos(name)));
-        v_net->ask_register(passwd);
+        v_net->ask_register(passwd,name);
     });
 
     //===== 网络反馈 =====
@@ -104,11 +102,7 @@ wid_manage::wid_manage(QWidget *parent)
     connect(v_net,&net_connect::fa_friends_list_back,this,
             [=](QMap<long long,string> map){
 
-        for(auto it=map.begin();it!=map.end();it++)
-        {
-            vlogf(vv(it.key()) vv(it.value()));
-        }
-
+        //第一次进入时的窗口状态切换
         if(v_login->isHidden() == false)
         {
             v_friends_list->set_account(v_net->get_account());
@@ -156,7 +150,7 @@ wid_manage::wid_manage(QWidget *parent)
 
         if(type == en_build_file::e_file)
         {
-            vlogf("fa_prog_send" vv(account_from) vv(qtos(filename)));//
+            vlogf("fa_prog_send: " vv(account_from) vv(qtos(filename)));//
             v_friends_list->into_news(en_info::e_send_file,account_from,filename);
         }
     });
@@ -173,7 +167,7 @@ wid_manage::wid_manage(QWidget *parent)
         else if(type == en_build_file::e_spic)
         { v_friends_list->into_news(en_info::e_send_pic,account_from,filename); }
 
-        vlogf("fa_swap_file_finish" vv(account_from) vv(qtos(filename)) vv(type) vv(is_ok));//
+        vlogd("fa_swap_file_finish" vv(account_from) vv(qtos(filename)) vv(type) vv(is_ok));//
     });
 
     connect(v_net,&net_connect::fa_swap_file_ret,this,
@@ -185,7 +179,7 @@ wid_manage::wid_manage(QWidget *parent)
             QString info = filename+"##100##1";
             v_friends_list->into_news(en_info::e_send_file_prog,account_from,info);
         }
-        vlogf("fa_swap_file_ret" vv(account_from) vv(qtos(filename)) vv(type) vv(is_ok));//
+        vlogd("fa_swap_file_ret" vv(account_from) vv(qtos(filename)) vv(type) vv(is_ok));//
     });
 
     connect(v_net,&net_connect::fa_swap_error,this,
@@ -200,7 +194,6 @@ wid_manage::wid_manage(QWidget *parent)
         //文件进度(需要三个字段:文件名,进度值,是否完成(prog/finish))(分割符:##)
         QString info = filename+"##"+QString::number(now)+"##0";
         v_friends_list->into_news(en_info::e_send_file_prog,account_from,info);
-//        vlogf("fa_prog_send: " vv(qtos(filename)) vv(account_from)  vv(now));//
     });
 
     connect(v_net,&net_connect::fa_prog_recv,this,
@@ -209,7 +202,6 @@ wid_manage::wid_manage(QWidget *parent)
         //文件进度(需要三个字段:文件名,进度值,是否完成(prog/finish))(分割符:##)
         QString info = filename+"##"+QString::number(now)+"##0";
         v_friends_list->into_news(en_info::e_send_file_prog,account_from,info);
-//        vlogf("fa_prog_recv: " vv(qtos(filename)) vv(account_from)  vv(now));//
     });
     //===== 网络反馈 =====
 }

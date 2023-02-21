@@ -263,4 +263,5 @@ void qt_news_file::set_status(QString status,int prog)
     if(is_self) lab_box->setText("<<< <<< [ "+v_filename+" ] [ "+status+" ]");
     else lab_box->setText("[ "+status+" ][ "+v_filename+" ] >>> >>>");
     v_prog->setValue(prog);
+    v_prog->update();
 }

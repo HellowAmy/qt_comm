@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QThread>
+#include <QTimer>
 
 //#include "net_connect.h"
 //#include "ms_web_client.h"
