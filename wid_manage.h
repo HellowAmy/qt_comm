@@ -5,8 +5,6 @@
 #include <QThread>
 #include <QTimer>
 
-//#include "net_connect.h"
-//#include "ms_web_client.h"
 #include "wid_login.h"
 #include "wid_friends_list.h"
 

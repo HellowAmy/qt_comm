@@ -1,6 +1,5 @@
 ﻿#include "wid_login.h"
 
-
 #include <QDebug>
 #define out qDebug()
 

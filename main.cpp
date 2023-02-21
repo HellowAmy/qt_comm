@@ -2,6 +2,22 @@
 #include "wid_manage.h"
 #include <QApplication>
 
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+
+#if 1
+    wid_manage k;
+
+#else
+    Widget w;
+    w.show();
+#endif
+
+    return a.exec();
+}
+
+
 //! =====各类功能=====
 //! 从wid_manage开始运行
 //!
@@ -47,17 +63,3 @@
 //! 文件：对方账号、数据、多次发完、标记类型、
 //!         标记总量、标记当前发送大小、标记累计大小
 //!
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-//    vinit_c(vlog::e_info);
-
-#if 1
-    wid_manage k;
-#else
-    Widget w;
-//    w.show();
-#endif
-
-    return a.exec();
-}

@@ -11,10 +11,9 @@ wid_manage::wid_manage(QWidget *parent)
 
     v_friends_list = new wid_friends_list;//好友列表
     v_friends_list->close();
-//139.159.196.60
     v_net = new net_connect;
-//    if(v_net->open_connect() < 0) { vloge("open_connect err"); };
-    if(v_net->open_connect("139.159.196.60",5005,"") < 0) { vloge("open_connect err"); };
+    if(v_net->open_connect() < 0) { vloge("open_connect err"); };
+//    if(v_net->open_connect("139.159.196.60",5005,"") < 0) { vloge("open_connect err"); };
 
     //发送--用户输入信息
     connect(v_friends_list,&wid_friends_list::fa_send_news,this,
