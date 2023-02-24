@@ -1,7 +1,6 @@
 ﻿#include "wid_friends_list.h"
 
-wid_friends_list::wid_friends_list(QWidget *parent)
-    : wid_change{parent}
+wid_friends_list::wid_friends_list(QWidget *parent) : wid_change(parent)
 {
     this->resize(250,600);
     this->open_translucent();

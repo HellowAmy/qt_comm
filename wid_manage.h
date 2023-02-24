@@ -18,9 +18,8 @@ class wid_manage : public QObject
 {
     Q_OBJECT
 public:
-    explicit wid_manage(QWidget *parent = nullptr);
+    explicit wid_manage(net_connect *net,QWidget *parent = nullptr);
     ~wid_manage();
-    bool init_net();
 
 signals:
     emit void fa_show_register(QString account,QString passwd);
@@ -28,7 +27,6 @@ signals:
 protected:
     wid_login *v_login;
     wid_friends_list *v_friends_list;
-    net_connect *v_net;
 };
 
 #endif // WID_MANAGE_H

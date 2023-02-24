@@ -60,13 +60,13 @@ signals:
     emit void fa_add_friend(long long account);
 
 protected:
-    QMap<long long,ct_friends_index> map_wid_talk;
-    QWidget *wid_slide;
-    qt_area_slide *area;
-    wid_add_friend *wid_add;
+    QMap<long long,ct_friends_index> map_wid_talk;//账号与好友绑定
+    QWidget *wid_slide;//接收滑动窗口的指针
+    qt_area_slide *area;//滑动窗口
+    wid_add_friend *wid_add;//添加好友窗口
     qt_button *butt_close;
     qt_button *butt_add;
-    QString v_file_path = "/tmp/qt_comm_cache/account/";
+    QString v_file_path = "/tmp/qt_comm_cache/account/"; //保存聊天记录
 
     long long v_account;
     int v_wide=250;

@@ -7,9 +7,17 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 #if 1
-    wid_manage k;
+    net_connect *net = new net_connect;
+    if(net->open_connect() < 0)
+    {
+        wid_dialog ("错误:连接服务器失败[请重启]");
+        vloge("open_connect err");
+        return -1;
+    };
+    wid_manage k(net);
 
 #else
+    //模块测试
     Widget w;
     w.show();
 #endif

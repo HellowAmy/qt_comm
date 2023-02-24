@@ -3,7 +3,7 @@
 #define qfrs(str) QString::fromStdString(str)
 #define qtos(str) str.toStdString()
 
-wid_manage::wid_manage(QWidget *parent)
+wid_manage::wid_manage(net_connect *v_net,QWidget *parent)
     : QObject{parent}
 {
     v_login = new wid_login;//登录窗口
@@ -11,8 +11,7 @@ wid_manage::wid_manage(QWidget *parent)
 
     v_friends_list = new wid_friends_list;//好友列表
     v_friends_list->close();
-    v_net = new net_connect;
-    if(v_net->open_connect() < 0) { vloge("open_connect err"); };
+
 //    if(v_net->open_connect("139.159.196.60",5005,"") < 0) { vloge("open_connect err"); };
 
     //发送--用户输入信息
@@ -68,6 +67,8 @@ wid_manage::wid_manage(QWidget *parent)
 
     connect(v_net,&net_connect::fa_close,this,[=](){
         vlogf("fa_close");//
+        wid_dialog ("网络连接断开[请检查服务器]");
+        exit(-1);
     });
 
     connect(v_net,&net_connect::fa_register_back,this,
@@ -209,10 +210,4 @@ wid_manage::~wid_manage()
 {
     delete v_login;
     delete v_friends_list;
-    delete v_net;
-}
-
-bool wid_manage::init_net()
-{
-    return true;
 }

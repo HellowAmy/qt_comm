@@ -8,9 +8,10 @@
 #include "wid_edit.h"
 #include "qt_button.h"
 #include "qt_move_it.h"
-//#include "wid_register.h"
-//#include "wid_register_back.h"
 
+//!
+//! 功能:添加好友的窗口，提供好友账号的输入
+//!
 class wid_add_friend : public wid_change
 {
     Q_OBJECT
