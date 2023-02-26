@@ -5,16 +5,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
 #if 1
-    net_connect *net = new net_connect;
-    if(net->open_connect() < 0)
-    {
-        wid_dialog ("错误:连接服务器失败[请重启]");
-        vloge("open_connect err");
-        return -1;
-    };
-    wid_manage k(net);
+    //程序启动入口
+    wid_manage k;
+    if(k.init_net() < 0)
+    { vlogf("网络连接初始化失败"); return -1; }
 
 #else
     //模块测试
@@ -24,7 +19,6 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
-
 
 //! =====各类功能=====
 //! 从wid_manage开始运行

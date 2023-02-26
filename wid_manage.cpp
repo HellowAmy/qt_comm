@@ -3,16 +3,16 @@
 #define qfrs(str) QString::fromStdString(str)
 #define qtos(str) str.toStdString()
 
-wid_manage::wid_manage(net_connect *v_net,QWidget *parent)
+wid_manage::wid_manage(QWidget *parent)
     : QObject{parent}
 {
+    v_net = new net_connect;//网络连接
+
     v_login = new wid_login;//登录窗口
     v_login->show();
 
     v_friends_list = new wid_friends_list;//好友列表
     v_friends_list->close();
-
-//    if(v_net->open_connect("139.159.196.60",5005,"") < 0) { vloge("open_connect err"); };
 
     //发送--用户输入信息
     connect(v_friends_list,&wid_friends_list::fa_send_news,this,
@@ -43,7 +43,7 @@ wid_manage::wid_manage(net_connect *v_net,QWidget *parent)
         v_net->ask_swap_add_friend(account);
     });
 
-    //发送--发送到网络//========================
+    //发送--发送到网络
     connect(v_login,&wid_login::fa_login,this,
             [=](long long account,QString passwd){
 
@@ -51,7 +51,7 @@ wid_manage::wid_manage(net_connect *v_net,QWidget *parent)
         v_net->ask_login(account,passwd);
     });
 
-    //网络返回--注册//========================
+    //网络返回--注册
     connect(v_login,&wid_login::fa_register,this,
             [=](QString name,QString passwd){
 
@@ -67,8 +67,12 @@ wid_manage::wid_manage(net_connect *v_net,QWidget *parent)
 
     connect(v_net,&net_connect::fa_close,this,[=](){
         vlogf("fa_close");//
-        wid_dialog ("网络连接断开[请检查服务器]");
-        exit(-1);
+
+        wid_dialog dia("网络连接断开[确认并重新连接]");
+        dia.exec();
+        if(dia.get_status())
+        { v_net->open_connect(ip,port); }
+        else { exit(-1); }
     });
 
     connect(v_net,&net_connect::fa_register_back,this,
@@ -204,6 +208,11 @@ wid_manage::wid_manage(net_connect *v_net,QWidget *parent)
         v_friends_list->into_news(en_info::e_send_file_prog,account_from,info);
     });
     //===== 网络反馈 =====
+}
+
+int wid_manage::init_net()
+{
+    return v_net->open_connect(ip,port);
 }
 
 wid_manage::~wid_manage()

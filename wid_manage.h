@@ -18,7 +18,8 @@ class wid_manage : public QObject
 {
     Q_OBJECT
 public:
-    explicit wid_manage(net_connect *net,QWidget *parent = nullptr);
+    explicit wid_manage(QWidget *parent = nullptr);
+    int init_net();
     ~wid_manage();
 
 signals:
@@ -27,6 +28,9 @@ signals:
 protected:
     wid_login *v_login;
     wid_friends_list *v_friends_list;
+    net_connect *v_net;
+    QString ip = "127.0.0.1";
+    int port = 5005;
 };
 
 #endif // WID_MANAGE_H
