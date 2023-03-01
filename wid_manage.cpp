@@ -43,7 +43,7 @@ wid_manage::wid_manage(QWidget *parent)
         v_net->ask_swap_add_friend(account);
     });
 
-    //发送--发送到网络
+    //发送--登陆
     connect(v_login,&wid_login::fa_login,this,
             [=](long long account,QString passwd){
 
@@ -51,7 +51,7 @@ wid_manage::wid_manage(QWidget *parent)
         v_net->ask_login(account,passwd);
     });
 
-    //网络返回--注册
+    //发送--注册
     connect(v_login,&wid_login::fa_register,this,
             [=](QString name,QString passwd){
 
@@ -217,6 +217,7 @@ int wid_manage::init_net()
 
 wid_manage::~wid_manage()
 {
+    delete v_net;
     delete v_login;
     delete v_friends_list;
 }

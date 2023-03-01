@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication a(argc, argv); //初始化Qt的GUI界面与主事件循环
 #if 1
     //程序启动入口
     wid_manage k;
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     w.show();
 #endif
 
-    return a.exec();
+    return a.exec(); //等待事件触发
 }
 
 //! =====各类功能=====
