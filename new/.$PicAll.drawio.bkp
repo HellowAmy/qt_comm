@@ -1,0 +1,73 @@
+<mxfile host="Electron" modified="2023-04-19T07:45:50.210Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="DlV1duSB3pHHGPR5rWih" version="21.1.2" type="device">
+  <diagram id="prtHgNgQTEPvFCAcTncT" name="Page-1">
+    <mxGraphModel dx="1052" dy="704" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-25" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="134" y="171" width="582" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Do2Q6mcpjUpiM5cCAcLP-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="154" y="341" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-6" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;网&lt;br&gt;络&lt;br&gt;连&lt;br&gt;接&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="245" y="265" width="60" height="153" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Do2Q6mcpjUpiM5cCAcLP-8" target="Do2Q6mcpjUpiM5cCAcLP-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-8" value="通信管理" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="311.5" width="76" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="Do2Q6mcpjUpiM5cCAcLP-9" target="Do2Q6mcpjUpiM5cCAcLP-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-9" value="登录界面" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="429" y="205" width="76" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Do2Q6mcpjUpiM5cCAcLP-10" target="Do2Q6mcpjUpiM5cCAcLP-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-10" value="好友列表" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="429" y="418" width="76" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Do2Q6mcpjUpiM5cCAcLP-11" target="Do2Q6mcpjUpiM5cCAcLP-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-11" value="聊天窗口" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="564" y="418" width="76" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Do2Q6mcpjUpiM5cCAcLP-12" target="Do2Q6mcpjUpiM5cCAcLP-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-12" value="注册界面" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="564" y="205" width="76" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="Do2Q6mcpjUpiM5cCAcLP-18">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="535.1428571428571" y="448" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-18" value="聊天窗口" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="564" y="348" width="76" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;endArrow=none;endFill=0;" edge="1" parent="1" source="Do2Q6mcpjUpiM5cCAcLP-19">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="535" y="447" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-19" value="聊天窗口" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="564" y="488" width="76" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-24" value="服务器连接" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="164" y="319" width="78" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Do2Q6mcpjUpiM5cCAcLP-26" value="客户端框架图" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="134" y="143" width="90" height="26" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
