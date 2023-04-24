@@ -87,6 +87,11 @@ wid_manage::wid_manage(QWidget *parent)
 
         vlogf("fa_login_back" vv(account) vv(ok));
         if(ok) { v_net->ask_friends_list(v_net->get_account()); }
+        else
+        {
+            wid_dialog dia("登录失败[帐号或者密码错误]");
+            dia.exec();
+        }
     });
 
     connect(v_net,&net_connect::fa_logout_back,this,

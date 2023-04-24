@@ -163,7 +163,18 @@ RESOURCES += \
 #INCLUDEPATH += $$PWD/lib/web_sock/include
 #DEPENDPATH += $$PWD/lib/web_sock/include
 
+
+
+#== ok :so ==
+#unix:!macx: LIBS += -L$$PWD/lib/web_sock/lib/ -lhv
+
+#INCLUDEPATH += $$PWD/lib/web_sock/include
+#DEPENDPATH += $$PWD/lib/web_sock/include
+
+#== ok :a ==
 unix:!macx: LIBS += -L$$PWD/lib/web_sock/lib/ -lhv
 
 INCLUDEPATH += $$PWD/lib/web_sock/include
 DEPENDPATH += $$PWD/lib/web_sock/include
+
+unix:!macx: PRE_TARGETDEPS += $$PWD/lib/web_sock/lib/libhv.a

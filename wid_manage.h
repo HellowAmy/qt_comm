@@ -26,7 +26,7 @@ protected:
     wid_login *v_login;                 //登陆窗口
     wid_friends_list *v_friends_list;   //好友列表窗口
     net_connect *v_net;                 //客户端网络连接接口
-    QString ip = "127.0.0.1"; //实际连接到云服务器：139.159.196.60
+    QString ip = "139.159.196.60"; //实际连接到云服务器：139.159.196.60 / 127.0.0.1
     int port = 5005;
 };
 
