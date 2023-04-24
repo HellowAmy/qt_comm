@@ -158,23 +158,19 @@ RESOURCES += \
 #    lib/web_sock/lib/libhv.so \
 #    lib/web_sock/lib/libhv_static.a
 
-#win32: LIBS += -L$$PWD/lib/web_sock/lib/ -llibhv.dll
-
-#INCLUDEPATH += $$PWD/lib/web_sock/include
-#DEPENDPATH += $$PWD/lib/web_sock/include
-
-
 
 #== ok :so ==
 #unix:!macx: LIBS += -L$$PWD/lib/web_sock/lib/ -lhv
-
 #INCLUDEPATH += $$PWD/lib/web_sock/include
 #DEPENDPATH += $$PWD/lib/web_sock/include
 
-#== ok :a ==
-unix:!macx: LIBS += -L$$PWD/lib/web_sock/lib/ -lhv
+##== ok :a ==
+#unix:!macx: LIBS += -L$$PWD/lib/web_sock/lib/ -lhv
+#INCLUDEPATH += $$PWD/lib/web_sock/include
+#DEPENDPATH += $$PWD/lib/web_sock/include
+#unix:!macx: PRE_TARGETDEPS += $$PWD/lib/web_sock/lib/libhv.a
 
-INCLUDEPATH += $$PWD/lib/web_sock/include
-DEPENDPATH += $$PWD/lib/web_sock/include
-
-unix:!macx: PRE_TARGETDEPS += $$PWD/lib/web_sock/lib/libhv.a
+#== ok :win lib ==
+win32: LIBS += -L$$PWD/lib/web_sock/lib/win10/ -lhv
+INCLUDEPATH += $$PWD/lib/web_sock/lib/win10
+DEPENDPATH += $$PWD/lib/web_sock/lib/win10
