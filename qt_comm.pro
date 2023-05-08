@@ -11,6 +11,8 @@ CONFIG += c++17
 SOURCES += \
     ../ms_comm/ms_comm_client/ms_web_client.cpp \
     ../ms_comm/ms_comm_client/net_connect.cpp \
+#    /d/open/GIT_WORK/ms_comm/ms_comm_client/ms_web_client.cpp \
+#    /d/open/GIT_WORK/ms_comm/ms_comm_client/net_connect.cpp \
     lab_tips.cpp \
 #    lib/vts/vts.cpp \
     main.cpp \
@@ -41,6 +43,8 @@ HEADERS += \
 #    c_define.h \
     ../ms_comm/ms_comm_client/ms_web_client.h \
     ../ms_comm/ms_comm_client/net_connect.h \
+#    /d/open/GIT_WORK/ms_comm/ms_comm_client/ms_web_client.h \
+#    /d/open/GIT_WORK/ms_comm/ms_comm_client/net_connect.h \
     lab_tips.h \
 #    lib/vts/vts.h \
     lib/web_sock/include/AsyncHttpClient.h \
