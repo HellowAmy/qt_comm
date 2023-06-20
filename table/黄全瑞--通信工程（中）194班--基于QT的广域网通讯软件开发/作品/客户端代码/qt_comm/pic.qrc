@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pic/pic_bake_login.png</file>
+        <file>pic/pic_bake_friends_list.png</file>
+        <file>pic/pic_butt_friends.png</file>
+        <file>pic/pic_bake_talk.png</file>
+    </qresource>
+</RCC>

@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-06-11T04:33:57.912Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.3.7 Chrome/112.0.5615.204 Electron/24.5.0 Safari/537.36" etag="3Tw3AiXF37oagCp457ro" version="21.3.7" type="device">
+<mxfile host="Electron" modified="2023-06-20T04:58:47.411Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="-wCHlYEmlg4vhKrAsJmj" version="21.1.2" type="device">
   <diagram name="第 1 页" id="ROaXv1Vdw0oqYexMZ9AF">
-    <mxGraphModel dx="2525" dy="868" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+    <mxGraphModel dx="1695" dy="352" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -22,7 +22,7 @@
           <mxGeometry x="549.5" y="281" width="72" height="36" as="geometry" />
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-5" value="弹出聊天窗口" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="530" y="467" width="111" height="48" as="geometry" />
+          <mxGeometry x="530" y="473" width="111" height="48" as="geometry" />
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="rDiVPwhU2FCSOjr8WJD4-1" target="rDiVPwhU2FCSOjr8WJD4-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -33,18 +33,18 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-26" value="客户端" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="545.5" y="554" width="80" height="80" as="geometry" />
+          <mxGeometry x="545.5" y="576" width="80" height="58" as="geometry" />
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-27" value="" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="rDiVPwhU2FCSOjr8WJD4-5" target="rDiVPwhU2FCSOjr8WJD4-26" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-28" value="发送数据" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="rDiVPwhU2FCSOjr8WJD4-27" vertex="1" connectable="0">
           <mxGeometry x="-0.3949" relative="1" as="geometry">
-            <mxPoint y="4" as="offset" />
+            <mxPoint y="8" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-29" value="服务器" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="731" y="554" width="80" height="80" as="geometry" />
+          <mxGeometry x="731" y="575" width="80" height="59" as="geometry" />
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-30" value="" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="rDiVPwhU2FCSOjr8WJD4-26" target="rDiVPwhU2FCSOjr8WJD4-29" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -55,14 +55,14 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-32" value="目标客户端" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="731" y="426" width="80" height="80" as="geometry" />
+          <mxGeometry x="731" y="447" width="80" height="59" as="geometry" />
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-33" value="" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="rDiVPwhU2FCSOjr8WJD4-29" target="rDiVPwhU2FCSOjr8WJD4-32" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-34" value="数据转发" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="rDiVPwhU2FCSOjr8WJD4-33" vertex="1" connectable="0">
           <mxGeometry x="-0.2952" relative="1" as="geometry">
-            <mxPoint as="offset" />
+            <mxPoint y="-5" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-35" value="弹出聊天窗口" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -73,7 +73,7 @@
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-37" value="显示信息" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="rDiVPwhU2FCSOjr8WJD4-36" vertex="1" connectable="0">
           <mxGeometry x="-0.3268" y="1" relative="1" as="geometry">
-            <mxPoint as="offset" />
+            <mxPoint x="1" y="-8" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="rDiVPwhU2FCSOjr8WJD4-39" value="数据交换流程" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
